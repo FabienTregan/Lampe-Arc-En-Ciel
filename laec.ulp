@@ -1,0 +1,240 @@
+UL_ELEMENT noElement;
+UL_CONTACT noContact;
+
+string CMD_PLACE = "place";
+string CMD_LEDS = "leds";
+string CMD_CAPS = "caps";
+string CMD_ROWS = "rows";
+string CMD_RIPUP = "ripup";
+ 
+string PIN_DI  = "1";
+string PIN_CI  = "2";
+string PIN_GND = "3";
+string PIN_VCC = "4";
+string PIN_CO  = "5";
+string PIN_DO  = "6";
+
+int NB_SEGMENTS = 3;
+int NB_ROWS = 4;
+int ROW_WIDTH = 10;                           // Width of each row in mm
+real ARC_ANGLE = 90;                          // 90 for half a rainbow, 180 for normal rainbow
+real SEGMENT_ANGLE = ARC_ANGLE / NB_SEGMENTS;
+real OUTER_RADIUS = 100;                      // Outer diameter of the pcb
+real CAP_MARGIN = 5;                          // Distance between cap and led in mm
+real WIDTH = 0.5;                             // Wires width
+
+real angleToCenter(real x, real y) {
+  return atan((y - 0) / (x - OUTER_RADIUS)) * 180 / PI;
+}
+
+UL_ELEMENT findElement(string name) {
+
+  board(B) {
+    B.elements(E) {
+      if (E.name == name) {
+        return E;
+      }
+    }
+  }
+  return noElement;
+}
+
+string ledName(int n) {
+  string result;
+  sprintf(result, "LED%d", n);
+  return result;
+}
+
+string capName(int n) {
+  string result;
+  sprintf(result, "C%d", n);
+  return result;
+}
+
+UL_ELEMENT findLed(int n) {
+  return findElement(ledName(n));
+}
+
+UL_ELEMENT findCap(int n) {
+  return findElement(capName(n));
+}
+
+UL_CONTACT findContact(UL_ELEMENT element, string name) {
+
+  element.package.contacts(c) {
+    if(c.name == name) {
+      return c;
+    }
+  }
+
+  return noContact;
+}
+
+string wirePads(UL_CONTACT cFrom, UL_CONTACT cTo) {
+  string line;
+  sprintf(line, "ROUTE %f (%f %f) (%f %f);", WIDTH, u2mm(cFrom.x), u2mm(cFrom.y), u2mm(cTo.x), u2mm(cTo.y));
+  return line;
+}
+
+
+string connectLeds(void) {
+  string result = "SET OBSTACLE_MODE IGNORE; SET WIRE_BEND 2;\n";
+  for (int segment = 0; segment < NB_SEGMENTS; segment++){
+    for (int row = 0; row < NB_ROWS - 1; row++) {
+
+      int n = (1 + segment * NB_ROWS + row); 
+
+      UL_ELEMENT eLedFrom = findLed(n);
+      UL_ELEMENT eLedTo = findLed(n + 1);
+
+      UL_CONTACT cCI = findContact(eLedFrom, PIN_CO);
+      UL_CONTACT cDI = findContact(eLedFrom, PIN_DO);
+      UL_CONTACT cCO = findContact(eLedTo,   PIN_CI);
+      UL_CONTACT cDO = findContact(eLedTo,   PIN_DI);
+
+      result += wirePads(cCO, cCI);
+      result += wirePads(cDO, cDI);
+
+    }
+  }
+  return result;
+}
+
+string connectRows(void) {
+  string result = "SET OBSTACLE_MODE IGNORE; SET WIRE_BEND 2;\n";
+  for (int segment = 0; segment < NB_SEGMENTS; segment++){
+
+    int n = 1 + segment * NB_ROWS;
+
+    UL_ELEMENT ledFrom = findLed(n + NB_SEGMENTS);
+
+    UL_CONTACT cCO = findContact(ledFrom, PIN_CO);
+
+    real angle = 180 + angleToCenter(u2mm(cCO.x), u2mm(cCO.y)); 
+
+    string line;
+    sprintf(line, "ROUTE (%f %f) ", u2mm(cCO.x), u2mm(cCO.y));
+    result += line;
+    sprintf(line, "(P %f %f) @-%f (P %f %f) (P %f %f);\n", 98.3, angle, 98.3, 98.3, angle - SEGMENT_ANGLE * 1/3, 61.5, angle - SEGMENT_ANGLE * 1/3);
+    result += line;
+
+
+    UL_CONTACT cDO= findContact(ledFrom, PIN_DO);
+
+    angle = 180 + angleToCenter(u2mm(cDO.x), u2mm(cDO.y)); 
+
+    sprintf(line, "ROUTE (%f %f) ", u2mm(cDO.x), u2mm(cDO.y));
+    result += line;
+    sprintf(line, "(P %f %f) @-%f (P %f %f) (P %f %f);\n", 99.1, angle, 99.1, 99.1, angle - SEGMENT_ANGLE * 1/3 - 2, 64.0, angle - SEGMENT_ANGLE * 1/3 - 2);
+    result += line;
+
+    UL_ELEMENT ledTo = findLed(n);
+
+    UL_CONTACT cCI = findContact(ledTo, PIN_CI);
+
+    angle = 180 + angleToCenter(u2mm(cCI.x), u2mm(cCI.y)); 
+
+    sprintf(line, "ROUTE (%f %f) (P %f %f);\n", u2mm(cCI.x), u2mm(cCI.y), 61.5, angle);
+    result += line;
+
+    UL_CONTACT cDI= findContact(ledTo, PIN_DI);
+
+    angle = 180 + angleToCenter(u2mm(cDI.x), u2mm(cDI.y)); 
+
+    sprintf(line, "ROUTE (%f %f) (P %f %f);\n", u2mm(cDI.x), u2mm(cDI.y), 64.0, angle);
+    result += line;
+
+  } 
+
+  return result;
+}
+
+string connectCaps(void) {
+  string result = "SET OBSTACLE_MODE IGNORE; SET WIRE_BEND 2;\n";
+  for (int segment = 0; segment < NB_SEGMENTS; segment++){
+    for (int row = 0; row < NB_ROWS; row++) {
+      int n = (1 + segment * NB_ROWS + row);
+
+      UL_ELEMENT eLed = findLed(n);
+      UL_ELEMENT eCap = findCap(n);
+
+      UL_CONTACT cGND  = findContact(eLed, PIN_GND);
+      UL_CONTACT cVCC  = findContact(eLed, PIN_VCC);
+      UL_CONTACT cCap1 = findContact(eCap, "1");
+      UL_CONTACT cCap2 = findContact(eCap, "2");
+
+      result += wirePads(cGND, cCap2);
+      result += wirePads(cVCC, cCap1);
+    }
+  }
+  return result;
+}
+
+string place(void) {
+  string result;
+  string line;
+
+  sprintf(line, "MARK (%f 0);\n", OUTER_RADIUS);
+  result += line; 
+
+  for (int segment = 0; segment < NB_SEGMENTS; segment++){
+    for (int row = 0; row < NB_ROWS; row++) {
+
+      int n = (1 + segment * NB_ROWS + row); 
+
+      string ledN = ledName(n);
+      string capN = capName(n);
+      
+      sprintf(line, "MOVE %s (R 0 0); ROTATE =R180 %s;\n", ledN, ledN);
+      result += line;
+
+      real angle = SEGMENT_ANGLE * (segment + 0.5);
+      real radius = OUTER_RADIUS - (NB_ROWS - 0.5 - row) * ROW_WIDTH;
+
+      real capAngle = angleToCenter((OUTER_RADIUS - radius), CAP_MARGIN); // tilt the cap toward center before rotating it to final position
+      sprintf(line, "MOVE %s (R 0 %f); ROTATE =R%f %s;\n", capN, CAP_MARGIN, capAngle, capN);
+      result += line;
+
+      sprintf(line, "GROUP (R 0 0) (RS 0 %f);\n", CAP_MARGIN);
+      result += line;
+      sprintf(line, "MOVE (R> 0 0) (R %f 0);\n", -radius );
+      result += line;
+      sprintf(line, "ROTATE =R%f (RC> 0 0);\n", -angle );
+      result += line;
+
+    }
+  }
+
+   return result;
+}
+
+
+void main() {
+  string script;
+
+  // This hack allow to execute each script before generation the next one.
+  // This allows the part to be positionned by previous script when the next one is generated.
+  if(argc == 1) {
+    script = "run laec.ulp " + CMD_PLACE + ";";
+    script += "run laec.ulp " + CMD_LEDS + ";";
+    script += "run laec.ulp " + CMD_CAPS + ";";
+    script += "run laec.ulp " + CMD_ROWS + ";";
+  } else {
+    script = "GRID = _saved @; GRID MM; GRID FINEST;";
+    if (argv[1] == CMD_PLACE) {
+      script += place();
+    } else if (argv[1] == CMD_LEDS) {
+      script += connectLeds();
+    } else if (argv[1] == CMD_CAPS) {
+      script += connectCaps();
+    } else if (argv[1] == CMD_ROWS) {
+      script += connectRows();
+    } else if (argv[1] == CMD_RIPUP) {
+      script += "GROUP (0 13.5) (100 100); RIPUP (CR 0 0);";
+    } 
+    script += "GRID _saved;"; 
+    script += "GRID = _saved;"; 
+  }
+
+  exit(script);
+}
