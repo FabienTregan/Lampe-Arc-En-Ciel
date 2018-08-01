@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="mm" unit="mm" style="dots" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
+<grid distance="0.003125" unitdist="mic" unit="mm" style="dots" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -537,7 +537,7 @@ design rules under a new name.</description>
 <attribute name="SPICEPREFIX" value="C" x="27.1" y="7.7" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="24.56" y="8.97" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="C14" library="eagle-ltspice" library_urn="urn:adsk.eagle:library:217" package="C0805" package3d_urn="urn:adsk.eagle:package:13265/1" value="" x="12.9" y="8.45" smashed="yes" rot="R270">
+<element name="C14" library="eagle-ltspice" library_urn="urn:adsk.eagle:library:217" package="C0805" package3d_urn="urn:adsk.eagle:package:13265/1" value="" x="12.9" y="8.45" locked="yes" smashed="yes" rot="R270">
 <attribute name="NAME" x="11.0064" y="8.455" size="1.27" layer="25" rot="R90" align="center"/>
 <attribute name="SPICEMODEL" value="NONE" x="12.9" y="8.45" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="SPICEPREFIX" value="C" x="12.9" y="8.45" size="1.778" layer="27" rot="R270" display="off"/>
@@ -676,12 +676,12 @@ design rules under a new name.</description>
 <signal name="N$53">
 <contactref element="U$1" pad="24"/>
 <contactref element="LED1" pad="1"/>
-<wire x1="38.92574375" y1="14.708353125" x2="24.1148" y2="11.294" width="0" layer="19" extent="1-1"/>
+<wire x1="24.1148" y1="11.294" x2="38.92574375" y2="14.708353125" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$54">
 <contactref element="LED1" pad="2"/>
 <contactref element="U$1" pad="23"/>
-<wire x1="39.339853125" y1="16.253834375" x2="24.1148" y2="10.5066" width="0" layer="19" extent="1-1"/>
+<wire x1="24.1148" y1="10.5066" x2="39.339853125" y2="16.253834375" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GND">
 <contactref element="U$1" pad="5"/>
@@ -712,22 +712,20 @@ design rules under a new name.</description>
 <contactref element="C1" pad="2"/>
 <contactref element="C2" pad="2"/>
 <contactref element="C3" pad="2"/>
-<wire x1="12.9" y1="7.5" x2="14" y2="7.5" width="0.5" layer="1"/>
-<wire x1="14" y1="7.5" x2="14.6" y2="8.1" width="0.5" layer="1"/>
-<wire x1="14.6" y1="8.1" x2="15.83175625" y2="8.100909375" width="0.5" layer="1"/>
+<wire x1="12.9" y1="7.5" x2="14" y2="7.5" width="0.5" layer="1" locked="yes"/>
+<wire x1="14" y1="7.5" x2="14.6" y2="8.1" width="0.5" layer="1" locked="yes"/>
+<wire x1="14.6" y1="8.1" x2="15.83175625" y2="8.100909375" width="0.5" layer="1" locked="yes"/>
 <polygon width="0.2" layer="16" isolate="0.254">
 <vertex x="0" y="0" curve="-90"/>
 <vertex x="100" y="100"/>
 <vertex x="100" y="80.25" curve="90"/>
 <vertex x="19.75" y="0"/>
 </polygon>
-<wire x1="12.9" y1="7.5" x2="12.9" y2="5.9" width="0.5" layer="1"/>
-<via x="12.9" y="5.9" extent="1-16" drill="0.35"/>
-<wire x1="24.1148" y1="8.9064" x2="26.833715625" y2="8.916284375" width="0.5" layer="1"/>
-<wire x1="26.833715625" y1="8.916284375" x2="27.1" y2="8.65" width="0.5" layer="1"/>
-<wire x1="27.1" y1="8.65" x2="27.1" y2="10.1" width="0.5" layer="1"/>
-<via x="27.1" y="10.1" extent="1-16" drill="0.35"/>
-<wire x1="27.1" y1="10.1" x2="20" y2="10.1" width="0.5" layer="16"/>
+<wire x1="12.9" y1="7.5" x2="12.9" y2="5.9" width="0.5" layer="1" locked="yes"/>
+<via x="12.9" y="5.9" extent="1-16" drill="0.35" locked="yes"/>
+<wire x1="24.1148" y1="8.9064" x2="26.833715625" y2="8.916284375" width="0.5" layer="1" locked="yes"/>
+<wire x1="27.1" y1="8.65" x2="27.1" y2="10.1" width="0.5" layer="1" locked="yes"/>
+<via x="27.1" y="10.1" extent="1-16" drill="0.35" locked="yes"/>
 <wire x1="77.527071875" y1="90.052025" x2="80.439334375" y2="92.12780625" width="0" layer="19" extent="1-1"/>
 <wire x1="83.02265625" y1="82.467525" x2="77.527071875" y2="90.052025" width="0" layer="19" extent="1-1"/>
 <wire x1="80.115259375" y1="80.392765625" x2="83.02265625" y2="82.467525" width="0" layer="19" extent="1-1"/>
@@ -752,7 +750,8 @@ design rules under a new name.</description>
 <wire x1="10.776190625" y1="25.563884375" x2="20.09235" y2="26.530953125" width="0" layer="19" extent="1-1"/>
 <wire x1="10.43464375" y1="29.12386875" x2="10.776190625" y2="25.563884375" width="0" layer="19" extent="1-1"/>
 <wire x1="27.1" y1="10.1" x2="30.094709375" y2="20.38750625" width="0" layer="19" extent="1-1"/>
-<wire x1="15.8852" y1="8.0936" x2="20" y2="10.1" width="0" layer="19" extent="1-16"/>
+<wire x1="26.833715625" y1="8.916284375" x2="27.1" y2="8.65" width="0" layer="19" extent="1-1"/>
+<wire x1="15.8852" y1="8.0936" x2="24.1148" y2="8.9064" width="0" layer="19" extent="1-1"/>
 <wire x1="15.83175625" y1="8.100909375" x2="15.8852" y2="8.0936" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
@@ -783,24 +782,20 @@ design rules under a new name.</description>
 <contactref element="C6" pad="1"/>
 <contactref element="LED10" pad="4"/>
 <contactref element="C10" pad="1"/>
-<wire x1="24.1148" y1="6.4934" x2="26.90558125" y2="6.503284375" width="0.5" layer="1"/>
-<wire x1="26.90558125" y1="6.503284375" x2="27.1" y2="6.75" width="0.5" layer="1"/>
-<wire x1="15.8852" y1="8.9064" x2="14.5" y2="8.9" width="0.5" layer="1"/>
-<wire x1="14" y1="9.4" x2="12.9" y2="9.4" width="0.5" layer="1"/>
-<wire x1="14.5" y1="8.9" x2="14" y2="9.4" width="0.5" layer="1"/>
+<wire x1="24.1148" y1="6.4934" x2="26.90558125" y2="6.503284375" width="0.5" layer="1" locked="yes"/>
+<wire x1="15.8852" y1="8.9064" x2="14.5" y2="8.9" width="0.5" layer="1" locked="yes"/>
+<wire x1="14" y1="9.4" x2="12.9" y2="9.4" width="0.5" layer="1" locked="yes"/>
+<wire x1="14.5" y1="8.9" x2="14" y2="9.4" width="0.5" layer="1" locked="yes"/>
 <polygon width="0.2" layer="16" isolate="0.254">
 <vertex x="40" y="0"/>
 <vertex x="20.25" y="0" curve="-90"/>
 <vertex x="100" y="79.75"/>
 <vertex x="100" y="60" curve="90"/>
 </polygon>
-<wire x1="27.1" y1="6.75" x2="27.15" y2="6.7" width="0.5" layer="1"/>
-<wire x1="12.9" y1="9.4" x2="12.9" y2="10.9" width="0.5" layer="1"/>
-<via x="12.9" y="10.9" extent="1-16" drill="0.35"/>
-<wire x1="12.9" y1="10.9" x2="21.6" y2="10.9" width="0.5" layer="16"/>
-<wire x1="27.15" y1="6.7" x2="27.15" y2="5.25" width="0.5" layer="1"/>
-<wire x1="27.15" y1="5.25" x2="27.1" y2="5.2" width="0.5" layer="1"/>
-<via x="27.1" y="5.2" extent="1-16" drill="0.35"/>
+<wire x1="12.9" y1="9.4" x2="12.9" y2="10.9" width="0.5" layer="1" locked="yes"/>
+<via x="12.9" y="10.9" extent="1-16" drill="0.35" locked="yes"/>
+<wire x1="27.15" y1="6.7" x2="27.15" y2="5.25" width="0.5" layer="1" locked="yes"/>
+<via x="27.1" y="5.2" extent="1-16" drill="0.35" locked="yes"/>
 <contactref element="LED6" pad="4"/>
 <wire x1="76.38826875" y1="94.3021" x2="80.0443" y2="93.986284375" width="0" layer="19" extent="1-1"/>
 <wire x1="78.97645625" y1="84.642840625" x2="80.0443" y2="93.986284375" width="0" layer="19" extent="1-1"/>
@@ -825,8 +820,11 @@ design rules under a new name.</description>
 <wire x1="16.185375" y1="24.1145" x2="18.288440625" y2="27.1275375" width="0" layer="19" extent="1-1"/>
 <wire x1="8.627634375" y1="29.711003125" x2="16.185375" y2="24.1145" width="0" layer="19" extent="1-1"/>
 <wire x1="6.526115625" y1="26.7026875" x2="8.627634375" y2="29.711003125" width="0" layer="19" extent="1-1"/>
-<wire x1="21.6" y1="10.9" x2="25.844634375" y2="21.526309375" width="0" layer="19" extent="1-16"/>
-<wire x1="24.1148" y1="6.4934" x2="21.6" y2="10.9" width="0" layer="19" extent="1-16"/>
+<wire x1="12.9" y1="10.9" x2="16.185375" y2="24.1145" width="0" layer="19" extent="1-1"/>
+<wire x1="24.1148" y1="6.4934" x2="15.8852" y2="8.9064" width="0" layer="19" extent="1-1"/>
+<wire x1="27.1" y1="6.75" x2="26.90558125" y2="6.503284375" width="0" layer="19" extent="1-1"/>
+<wire x1="27.15" y1="6.7" x2="27.1" y2="6.75" width="0" layer="19" extent="1-1"/>
+<wire x1="27.1" y1="5.2" x2="27.15" y2="5.25" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$3">
 <contactref element="LED5" pad="2"/>
@@ -891,6 +889,10 @@ will not be understood (or retained) with this version.
 Since Version 8.3, EAGLE supports the association of 3D packages
 with devices in libraries, schematics, and board files. Those 3D
 packages will not be understood (or retained) with this version.
+</note>
+<note version="8.5" severity="warning">
+Since Version 8.5, EAGLE supports locking for holes, vias, wires and polygons. 
+The locking property on all objects of these types will not be understood in this version. 
 </note>
 </compatibility>
 </eagle>
