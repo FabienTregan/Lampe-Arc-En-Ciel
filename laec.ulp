@@ -79,7 +79,7 @@ string connectLeds(void) {
 }
 
 string connectRows(void) {
-  string result = "CHANG WIDTH 0.35;";
+  string result = "CHANG WIDTH 0.5;";
   for (int segment = 0; segment < NB_SEGMENTS -1; segment++){
 
     int n = (1 + segment) * NB_ROWS;
@@ -92,7 +92,7 @@ string connectRows(void) {
 
     result +=
       ftpStartFromContact(OUTER_RADIUS, 0, cDO)
-      + ftpRadialMoveTo(OUTER_RADIUS - 1.1)
+      + ftpRadialMoveTo(OUTER_RADIUS - 0.85)
       + ftpAngularMove(-(SEGMENT_ANGLE / 3 + 1.25))
       + ftpRadialMoveToContact(cDI)
       + ftpAngularMoveToContact(cDI);
@@ -102,7 +102,7 @@ string connectRows(void) {
 
     result +=
       ftpStartFromContact(OUTER_RADIUS, 0, cCO)
-      + ftpRadialMoveTo(OUTER_RADIUS - 1.75)
+      + ftpRadialMoveTo(OUTER_RADIUS - 1.65)
       + ftpAngularMove(-(SEGMENT_ANGLE/3 - 1.25))
       + ftpRadialMoveTo(INNER_RADIUS + 1)
       + ftpAngularMoveToContact(cCI)
@@ -115,6 +115,7 @@ string connectRows(void) {
 
 string connectCaps(void) {
   string result = "";
+
   for (int segment = 0; segment < NB_SEGMENTS; segment++){
     for (int row = 0; row < NB_ROWS; row++) {
       int n = (1 + segment * NB_ROWS + row);
