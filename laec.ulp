@@ -1,3 +1,5 @@
+#include "ftFind.ulp"
+
 UL_ELEMENT noElement;
 UL_CONTACT noContact;
 
@@ -27,18 +29,6 @@ real angleToCenter(real x, real y) {
   return atan((y - 0) / (x - OUTER_RADIUS)) * 180 / PI;
 }
 
-UL_ELEMENT findElement(string name) {
-
-  board(B) {
-    B.elements(E) {
-      if (E.name == name) {
-        return E;
-      }
-    }
-  }
-  return noElement;
-}
-
 string ledName(int n) {
   string result;
   sprintf(result, "LED%d", n);
@@ -59,23 +49,11 @@ UL_ELEMENT findCap(int n) {
   return findElement(capName(n));
 }
 
-UL_CONTACT findContact(UL_ELEMENT element, string name) {
-
-  element.package.contacts(c) {
-    if(c.name == name) {
-      return c;
-    }
-  }
-
-  return noContact;
-}
-
 string wirePads(UL_CONTACT cFrom, UL_CONTACT cTo) {
   string line;
   sprintf(line, "ROUTE %f (%f %f) (%f %f);", WIDTH, u2mm(cFrom.x), u2mm(cFrom.y), u2mm(cTo.x), u2mm(cTo.y));
   return line;
 }
-
 
 string connectLeds(void) {
   string result = "SET OBSTACLE_MODE IGNORE; SET WIRE_BEND 2;\n";

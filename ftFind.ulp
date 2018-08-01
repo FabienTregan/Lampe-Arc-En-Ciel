@@ -1,0 +1,25 @@
+UL_ELEMENT noElement;
+UL_CONTACT noContact;
+
+UL_ELEMENT findElement(string name) {
+
+  board(B) {
+    B.elements(E) {
+      if (E.name == name) {
+        return E;
+      }
+    }
+  }
+  return noElement;
+}
+
+UL_CONTACT findContact(UL_ELEMENT element, string name) {
+
+  element.package.contacts(c) {
+    if(c.name == name) {
+      return c;
+    }
+  }
+
+  return noContact;
+}
