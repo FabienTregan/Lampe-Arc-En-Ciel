@@ -1,0 +1,138 @@
+/**
+
+  Library for polar tracks.
+
+  Author : Fabien Tregan.
+
+**/
+
+real _ftpCenterX;
+real _ftpCenterY;
+real _ftpRadius;
+real _ftpModulus;
+
+void _ftpShowReal(string description, real x) {
+  string text;
+  sprintf(text, "%s : %f.", description, x);
+  dlgMessageBox(text);
+}
+
+real ftpRadiusFrom(real fromX, real fromY, real x, real y) {
+  return sqrt( pow(fromX - x, 2) + pow(fromY - y, 2));
+}
+
+// Radius from the current center.
+real ftpRadius(real x, real y) {
+  return ftpRadiusFrom(_ftpCenterX, _ftpCenterY, x, y);
+}
+
+real ftpModulusFrom(real centerX, real centerY, real x, real y) {
+  real result;
+
+  real dx = x - centerX;
+  real dy = y - centerY;
+
+  if (dx == 0) {
+    if (dy > 0) {
+      result = 90;
+    } else {
+      result = -90;
+    }
+  } else {
+    real teta = atan( dy/dx ) * 180 / PI;
+    if( dx > 0 ) {
+      result = teta;
+    } else {
+      result = 180 - teta;
+    }
+  }
+
+  return result;
+}
+
+real ftpModulus(real x, real y) {
+  return ftpModulusFrom(_ftpCenterX, _ftpCenterY, x, y);
+}
+
+string ftpStart(real centerX, real centerY, real x, real y) {
+  string result = "";
+  result += "GRID = _ftpGridBeforeEnd @; GRID MM; GRID FINEST;\n";
+  result += "SET WIRE_BEND 2;\n";
+
+  string line;
+
+  sprintf(line, "MARK (%f %f);\n\n", centerX, centerY);
+  result += line;
+
+  _ftpCenterX = centerX;
+  _ftpCenterY = centerY;
+  _ftpRadius = ftpRadius(x, y);
+  _ftpModulus = ftpModulus(x, y);
+
+  return result;
+}
+
+string ftpStartFromContact(real centerX, real centerY, UL_CONTACT c) {
+  return ftpStart(centerX, centerY, u2mm(c.x), u2mm(c.y));
+}
+
+string ftpEnd() {
+  return "\nGRID _ftpGridBeforeEnd; GRID = _ftpGridBeforeEnd;";
+}
+
+string ftpRadialMoveTo(real radius) {
+  string result;  
+
+  string line;
+  sprintf(line, "ROUTE (P %f %f) (P %f %f);\n", _ftpRadius, _ftpModulus, radius, _ftpModulus);
+  result += line;
+
+  _ftpRadius = radius;
+
+  return result;
+}
+
+string ftpRadialMove(real distance) {
+  return ftpRadialMoveTo(_ftpRadius + distance);
+}
+
+string ftpRadialMoveToContact(UL_CONTACT c) {
+  real x = u2mm(c.x);
+  real y = u2mm(c.y);
+  real radius = ftpRadius(x, y);
+
+  return ftpRadialMoveTo(radius);
+}
+
+string ftpAngularMove(real angle) {
+  string result;
+
+  string sign = angle > 0 ? "+" : "-";
+
+  sprintf(result, "ROUTE (P %f %f) @%s%f (P %f %f);\n", _ftpRadius, _ftpModulus, sign, _ftpRadius, _ftpRadius, _ftpModulus + angle);
+
+  _ftpModulus += angle;
+
+  return result;
+}
+
+string ftpAngularMoveTo(real modulus) {
+  real angle = modulus - _ftpModulus;
+
+  while (angle > 180) {
+    angle -= 360;
+  }
+  while (angle < -180) {
+    angle += 360;
+  }
+
+  return ftpAngularMove(angle);
+}
+
+string ftpAngularMoveToContact(UL_CONTACT c) {
+  real x = u2mm(c.x);
+  real y = u2mm(c.y);
+  real modulus = ftpModulus(x, y);
+
+  return ftpAngularMoveTo(modulus);
+}

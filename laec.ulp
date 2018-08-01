@@ -144,6 +144,13 @@ string connectRows(void) {
     sprintf(line, "ROUTE (%f %f) (P %f %f);\n", u2mm(cDI.x), u2mm(cDI.y), 64.0, angle);
     result += line;
 
+    if(segment < NB_SEGMENTS - 1) {
+
+      sprintf(line, "ROUTE (P %f %f);\n", u2mm(cDI.x), u2mm(cDI.y), 64.0, angle);
+      result += line;
+
+    }
+
   } 
 
   return result;

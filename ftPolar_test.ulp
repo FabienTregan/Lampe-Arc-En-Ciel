@@ -1,0 +1,84 @@
+/**
+  To run tests :
+    # open ftPolar_test.brd;
+    # `run ftPolar_test`
+
+**/
+
+#include "ftPolar.ulp"
+
+
+/******** put this elsewhere ******************/
+
+UL_ELEMENT noElement;
+UL_CONTACT noContact;
+
+UL_ELEMENT findElement(string name) {
+
+  board(B) {
+    B.elements(E) {
+      if (E.name == name) {
+        return E;
+      }
+    }
+  }
+  return noElement;
+}
+
+UL_CONTACT findContact(UL_ELEMENT element, string name) {
+
+  element.package.contacts(c) {
+    if(c.name == name) {
+      return c;
+    }
+  }
+
+  return noContact;
+}
+
+
+/******** put this elsewhere ******************/
+
+
+void main() {
+
+  real markX = 50;
+  real markY = 70;
+
+  UL_ELEMENT ic1 = findElement("IC1");
+  UL_ELEMENT ic2 = findElement("IC2");
+
+  UL_CONTACT cStart = findContact(ic1, "1");
+  UL_CONTACT cEnd = findContact(ic2, "2");
+
+  string script = "RIPUP;\n\n";
+
+
+  script +=
+      ftpStartFromContact(markX, markY, cStart)
+    + ftpRadialMove(5)
+    + ftpAngularMove(10)
+    + ftpRadialMoveTo(15)
+
+    + ftpAngularMove(20)
+    + ftpRadialMove(-3)
+    + ftpAngularMove(-15)
+    + ftpRadialMove(-3)
+    + ftpAngularMove(45)
+    + ftpRadialMove(+3)
+    + ftpAngularMove(-15)
+    + ftpRadialMove(+3)
+    + ftpAngularMove(+15)
+    + ftpRadialMove(+3)
+    + ftpAngularMove(+15)
+
+    + ftpAngularMoveToContact(cEnd)
+    + ftpAngularMove(30)
+    + ftpRadialMoveToContact(cEnd)
+    + ftpAngularMoveToContact(cEnd)
+    + ftpEnd();
+
+  //dlgMessageBox(script);
+
+  exit(script);
+}
