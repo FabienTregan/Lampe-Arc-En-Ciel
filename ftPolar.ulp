@@ -43,7 +43,7 @@ real ftpModulusFrom(real centerX, real centerY, real x, real y) {
     if( dx > 0 ) {
       result = teta;
     } else {
-      result = 180 - teta;
+      result = 180 + teta;
     }
   }
 

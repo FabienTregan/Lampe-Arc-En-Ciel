@@ -1,13 +1,12 @@
 #include "ftFind.ulp"
-
-UL_ELEMENT noElement;
-UL_CONTACT noContact;
+#include "ftPolar.ulp"
 
 string CMD_PLACE = "place";
 string CMD_LEDS = "leds";
 string CMD_CAPS = "caps";
 string CMD_ROWS = "rows";
 string CMD_RIPUP = "ripup";
+string CMD_TEST = "test";
  
 string PIN_DI  = "1";
 string PIN_CI  = "2";
@@ -135,7 +134,7 @@ string connectRows(void) {
 }
 
 string connectCaps(void) {
-  string result = "SET OBSTACLE_MODE IGNORE; SET WIRE_BEND 2;\n";
+  string result = "";
   for (int segment = 0; segment < NB_SEGMENTS; segment++){
     for (int row = 0; row < NB_ROWS; row++) {
       int n = (1 + segment * NB_ROWS + row);
@@ -148,8 +147,16 @@ string connectCaps(void) {
       UL_CONTACT cCap1 = findContact(eCap, "1");
       UL_CONTACT cCap2 = findContact(eCap, "2");
 
-      result += wirePads(cGND, cCap2);
-      result += wirePads(cVCC, cCap1);
+      result +=
+        ftpStartFromContact(OUTER_RADIUS, 0, cGND)
+        + ftpAngularMoveToContact(cCap2)
+        + ftpRadialMoveToContact(cCap2)
+
+        + ftpStartFromContact(OUTER_RADIUS, 0, cVCC)
+        + ftpAngularMoveToContact(cCap1)
+        + ftpRadialMoveToContact(cCap1)
+
+        + ftpEnd();
     }
   }
   return result;
@@ -204,21 +211,15 @@ void main() {
     script += "run laec.ulp " + CMD_LEDS + ";";
     script += "run laec.ulp " + CMD_CAPS + ";";
     script += "run laec.ulp " + CMD_ROWS + ";";
-  } else {
-    script = "GRID = _saved @; GRID MM; GRID FINEST;";
-    if (argv[1] == CMD_PLACE) {
-      script += place();
-    } else if (argv[1] == CMD_LEDS) {
-      script += connectLeds();
-    } else if (argv[1] == CMD_CAPS) {
-      script += connectCaps();
-    } else if (argv[1] == CMD_ROWS) {
-      script += connectRows();
-    } else if (argv[1] == CMD_RIPUP) {
-      script += "GROUP (0 13.5) (100 100); RIPUP (CR 0 0);";
-    } 
-    script += "GRID _saved;"; 
-    script += "GRID = _saved;"; 
+  } else if (argv[1] == CMD_PLACE) {
+    script = place();
+  } else if (argv[1] == CMD_LEDS) {
+    script = connectLeds();
+  } else if (argv[1] == CMD_CAPS) {
+    script = connectCaps();
+  } else if (argv[1] == CMD_ROWS) {
+    script = connectRows();
+  } else if (argv[1] == CMD_TEST) {
   }
 
   exit(script);
