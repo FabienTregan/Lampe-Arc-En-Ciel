@@ -76,6 +76,12 @@ string ftpStartFromContact(real centerX, real centerY, UL_CONTACT c) {
   return ftpStart(centerX, centerY, u2mm(c.x), u2mm(c.y));
 }
 
+string ftpVia() {
+  string result;
+  sprintf(result, "VIA (P %f %f);\n", _ftpRadius, _ftpModulus);
+  return result;
+}
+
 string ftpEnd() {
   return "\nGRID _ftpGridBeforeEnd; GRID = _ftpGridBeforeEnd;";
 }

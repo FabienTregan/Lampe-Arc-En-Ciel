@@ -135,11 +135,47 @@ string connectCaps(void) {
 
         + ftpStartFromContact(OUTER_RADIUS, 0, cVCC)
         + ftpAngularMoveToContact(cCap1)
-        + ftpRadialMoveToContact(cCap1)
-
-        + ftpEnd();
+        + ftpRadialMoveToContact(cCap1);
     }
   }
+
+  for (segment = 0; segment < NB_SEGMENTS; segment++){
+    for(int row = 0; row < NB_ROWS; row++) {
+      int n = segment * NB_ROWS + row + 1;
+
+      UL_ELEMENT eCap = findCap(n);
+
+      real goodSideAngle = SEGMENT_ANGLE * (segment + 0.5) + 6;
+
+      UL_CONTACT cGoodSide;
+      UL_CONTACT cWrongSide;
+      real wrongSideAngle;
+      real goodSideDistance;
+
+      if(row < 2) {
+        cGoodSide = findContact(eCap, "1");
+        cWrongSide = findContact(eCap, "2");
+        wrongSideAngle = goodSideAngle + 0.40;
+        goodSideDistance = +2;
+      } else {
+        cGoodSide = findContact(eCap, "2");
+        cWrongSide = findContact(eCap, "1");
+        wrongSideAngle = goodSideAngle + 1.0;
+        goodSideDistance = -2;
+      }
+
+      result +=
+        ftpStartFromContact(OUTER_RADIUS, 0, cWrongSide)
+        + ftpAngularMoveTo(180 - wrongSideAngle);
+
+      result +=
+        ftpStartFromContact(OUTER_RADIUS, 0, cGoodSide)
+        + ftpRadialMove(goodSideDistance)
+        + ftpVia();
+    }
+  }
+
+  result += ftpEnd();
 
   return result;
 }
