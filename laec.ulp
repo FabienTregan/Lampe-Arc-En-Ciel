@@ -4,7 +4,7 @@
 string CMD_PLACE = "place";
 string CMD_LEDS = "leds";
 string CMD_CAPS = "caps";
-string CMD_ROWS = "rows";
+string CMD_SEGMENTS = "segments";
 string CMD_RIPUP = "ripup";
 string CMD_TEST = "test";
  
@@ -78,7 +78,7 @@ string connectLeds(void) {
   return result;
 }
 
-string connectRows(void) {
+string connectSegments(void) {
   string result = "CHANG WIDTH 0.5;";
   for (int segment = 0; segment < NB_SEGMENTS -1; segment++){
 
@@ -151,22 +151,30 @@ string connectCaps(void) {
       UL_CONTACT cWrongSide;
       real wrongSideAngle;
       real goodSideDistance;
+      real wrongSideViaRadius;
 
       if(row < 2) {
         cGoodSide = findContact(eCap, "1");
         cWrongSide = findContact(eCap, "2");
         wrongSideAngle = goodSideAngle + 0.40;
         goodSideDistance = +2;
+        wrongSideViaRadius = INNER_RADIUS + ROW_WIDTH * NB_ROWS / 2 + 0.5;
       } else {
         cGoodSide = findContact(eCap, "2");
         cWrongSide = findContact(eCap, "1");
         wrongSideAngle = goodSideAngle + 1.0;
+        wrongSideViaRadius = INNER_RADIUS + ROW_WIDTH * NB_ROWS / 2 - 0.5;
         goodSideDistance = -2;
       }
 
       result +=
         ftpStartFromContact(OUTER_RADIUS, 0, cWrongSide)
         + ftpAngularMoveTo(180 - wrongSideAngle);
+      if(row == 0 || row == (NB_ROWS-1)) {
+        result +=
+          ftpRadialMoveTo(wrongSideViaRadius)
+          + ftpVia();
+      }
 
       result +=
         ftpStartFromContact(OUTER_RADIUS, 0, cGoodSide)
@@ -221,15 +229,15 @@ void main() {
     script = "run laec.ulp " + CMD_PLACE + ";";
     script += "run laec.ulp " + CMD_LEDS + ";";
     script += "run laec.ulp " + CMD_CAPS + ";";
-    script += "run laec.ulp " + CMD_ROWS + ";";
+    script += "run laec.ulp " + CMD_SEGMENTS + ";";
   } else if (argv[1] == CMD_PLACE) {
     script = place();
   } else if (argv[1] == CMD_LEDS) {
     script = connectLeds();
   } else if (argv[1] == CMD_CAPS) {
     script = connectCaps();
-  } else if (argv[1] == CMD_ROWS) {
-    script = connectRows();
+  } else if (argv[1] == CMD_SEGMENTS) {
+    script = connectSegments();
   } else if (argv[1] == CMD_TEST) {
   }
 
