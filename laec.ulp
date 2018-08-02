@@ -2,7 +2,7 @@
 #include "ftPolar.ulp"
 
 string CMD_PLACE = "place";
-string CMD_LEDS = "leds";
+string CMD_ROWS = "rows";
 string CMD_CAPS = "caps";
 string CMD_SEGMENTS = "segments";
 string CMD_RIPUP = "ripup";
@@ -55,7 +55,7 @@ string wirePads(UL_CONTACT cFrom, UL_CONTACT cTo) {
   return line;
 }
 
-string connectLeds(void) {
+string connectRows(void) {
   string result = "SET OBSTACLE_MODE IGNORE; SET WIRE_BEND 2;\n";
   for (int segment = 0; segment < NB_SEGMENTS; segment++){
     for (int row = 0; row < NB_ROWS - 1; row++) {
@@ -227,13 +227,13 @@ void main() {
   // This allows the parts to be positionned by previous script before the next one is executed.
   if(argc == 1) {
     script = "run laec.ulp " + CMD_PLACE + ";";
-    script += "run laec.ulp " + CMD_LEDS + ";";
+    script += "run laec.ulp " + CMD_ROWS + ";";
     script += "run laec.ulp " + CMD_CAPS + ";";
     script += "run laec.ulp " + CMD_SEGMENTS + ";";
   } else if (argv[1] == CMD_PLACE) {
     script = place();
-  } else if (argv[1] == CMD_LEDS) {
-    script = connectLeds();
+  } else if (argv[1] == CMD_ROWS) {
+    script = connectRows();
   } else if (argv[1] == CMD_CAPS) {
     script = connectCaps();
   } else if (argv[1] == CMD_SEGMENTS) {
