@@ -55,6 +55,12 @@ string wirePads(UL_CONTACT cFrom, UL_CONTACT cTo) {
   return line;
 }
 
+string markCenter(void) {
+  string line;
+  sprintf(line, "MARK (%f 0);\n", OUTER_RADIUS);
+  return line;
+}
+
 string connectRows(void) {
   string result = "SET OBSTACLE_MODE IGNORE; SET WIRE_BEND 2;\n";
   for (int segment = 0; segment < NB_SEGMENTS; segment++){
@@ -192,8 +198,7 @@ string place(void) {
   string result;
   string line;
 
-  sprintf(line, "MARK (%f 0);\n", OUTER_RADIUS);
-  result += line; 
+  result = markCenter(); 
 
   for (int segment = 0; segment < NB_SEGMENTS; segment++){
     for (int row = 0; row < NB_ROWS; row++) {
