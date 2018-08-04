@@ -17,6 +17,17 @@ void _ftpShowReal(string description, real x) {
   dlgMessageBox(text);
 }
 
+/**
+  Switches to layer n.
+
+  see documentation of UL_LAYER for possible parameter (LAYER_TOP, LAYER_BOTTOM, ...)
+**/
+string ftpLayer(int n) {
+  string script;
+  sprintf(script, "LAYER %d;\n", n);
+  return script;
+}
+
 real ftpRadiusFrom(real fromX, real fromY, real x, real y) {
   return sqrt( pow(fromX - x, 2) + pow(fromY - y, 2));
 }

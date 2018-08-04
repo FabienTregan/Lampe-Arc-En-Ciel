@@ -71,6 +71,7 @@
 <layer number="97" name="Info" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="98" name="Guide" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="99" name="SpiceOrder" color="5" fill="1" visible="no" active="yes"/>
+<layer number="200" name="200bmp" color="1" fill="10" visible="no" active="no"/>
 </layers>
 <schematic xreflabel="%F%N/%S.%C%R" xrefpart="/%S.%C%R">
 <libraries>
@@ -299,6 +300,28 @@
 <wire x1="-2.4" y1="2.3" x2="-2.2" y2="2.5" width="0.127" layer="21"/>
 <wire x1="-2.2" y1="2.5" x2="-1.5" y2="2.5" width="0.127" layer="21"/>
 </package>
+<package name="AVR_ISP_2X5">
+<pad name="1" x="-5.08" y="-1.27" drill="0.9398" diameter="1.524" shape="square"/>
+<pad name="2" x="-5.08" y="1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
+<pad name="3" x="-2.54" y="-1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
+<pad name="4" x="-2.54" y="1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
+<pad name="5" x="0" y="-1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
+<pad name="6" x="0" y="1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
+<pad name="7" x="2.54" y="-1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
+<pad name="8" x="2.54" y="1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
+<pad name="9" x="5.08" y="-1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
+<pad name="10" x="5.08" y="1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
+<text x="-5.08" y="-2.54" size="1.27" layer="21" align="top-center">O</text>
+<text x="-5.08" y="2.54" size="1.27" layer="21" align="bottom-center">V</text>
+<text x="-2.54" y="2.54" size="1.27" layer="21" align="bottom-center">T.</text>
+<text x="0" y="2.54" size="1.27" layer="21" align="bottom-center">R.</text>
+<text x="2.54" y="2.54" size="1.27" layer="21" align="bottom-center">G</text>
+<text x="5.08" y="2.54" size="1.27" layer="21" align="bottom-center">G</text>
+<text x="-2.54" y="-2.54" size="1.27" layer="21" align="top-center">G</text>
+<text x="0" y="-2.54" size="1.27" layer="21" align="top-center">R</text>
+<text x="2.54" y="-2.54" size="1.27" layer="21" align="top-center">C</text>
+<text x="5.08" y="-2.54" size="1.27" layer="21" align="top-center">I</text>
+</package>
 </packages>
 <symbols>
 <symbol name="ATMEGA328PB-AU">
@@ -355,6 +378,22 @@
 <wire x1="-7.62" y1="-7.62" x2="-7.62" y2="7.62" width="0.254" layer="94"/>
 <text x="0" y="10.16" size="1.778" layer="94" align="bottom-center">APA102</text>
 <text x="0" y="-10.16" size="1.778" layer="94" align="top-center">&gt;NAME</text>
+</symbol>
+<symbol name="AVR_ISP_10">
+<pin name="MOSI" x="-10.16" y="-15.24" length="middle" rot="R90"/>
+<pin name="VTARG" x="-10.16" y="15.24" length="middle" rot="R270"/>
+<pin name="TXD" x="-5.08" y="15.24" length="middle" rot="R270"/>
+<pin name="RESET" x="0" y="-15.24" length="middle" rot="R90"/>
+<pin name="RXD" x="0" y="15.24" length="middle" rot="R270"/>
+<pin name="SCK" x="5.08" y="-15.24" length="middle" rot="R90"/>
+<pin name="MISO" x="10.16" y="-15.24" length="middle" rot="R90"/>
+<pin name="GND@1" x="10.16" y="15.24" length="middle" rot="R270"/>
+<wire x1="-15.24" y1="10.16" x2="-15.24" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="-15.24" y1="-10.16" x2="15.24" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="15.24" y1="-10.16" x2="15.24" y2="10.16" width="0.254" layer="94"/>
+<wire x1="15.24" y1="10.16" x2="-15.24" y2="10.16" width="0.254" layer="94"/>
+<pin name="GND@2" x="5.08" y="15.24" length="middle" rot="R270"/>
+<pin name="NC" x="-5.08" y="-15.24" length="middle" rot="R90"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -417,6 +456,30 @@
 <connect gate="G$1" pin="DO" pad="6"/>
 <connect gate="G$1" pin="GND" pad="3"/>
 <connect gate="G$1" pin="VCC" pad="4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="AVR_ISP_10">
+<gates>
+<gate name="G$1" symbol="AVR_ISP_10" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="AVR_ISP_2X5">
+<connects>
+<connect gate="G$1" pin="GND@1" pad="10"/>
+<connect gate="G$1" pin="GND@2" pad="8"/>
+<connect gate="G$1" pin="MISO" pad="9"/>
+<connect gate="G$1" pin="MOSI" pad="1"/>
+<connect gate="G$1" pin="NC" pad="3"/>
+<connect gate="G$1" pin="RESET" pad="5"/>
+<connect gate="G$1" pin="RXD" pad="6"/>
+<connect gate="G$1" pin="SCK" pad="7"/>
+<connect gate="G$1" pin="TXD" pad="4"/>
+<connect gate="G$1" pin="VTARG" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -1093,7 +1156,7 @@ Source: AVX .. aphvc.pdf</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="supply1">
+<library name="supply1" urn="urn:adsk.eagle:library:371">
 <description>&lt;b&gt;Supply Symbols&lt;/b&gt;&lt;p&gt;
  GND, VCC, 0V, +5V, -5V, etc.&lt;p&gt;
  Please keep in mind, that these devices are necessary for the
@@ -1104,12 +1167,12 @@ Source: AVX .. aphvc.pdf</description>
 <packages>
 </packages>
 <symbols>
-<symbol name="GND">
+<symbol name="GND" urn="urn:adsk.eagle:symbol:26925/1" library_version="1">
 <wire x1="-1.905" y1="0" x2="1.905" y2="0" width="0.254" layer="94"/>
 <text x="-2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
 <pin name="GND" x="0" y="2.54" visible="off" length="short" direction="sup" rot="R270"/>
 </symbol>
-<symbol name="+5V">
+<symbol name="+5V" urn="urn:adsk.eagle:symbol:26929/1" library_version="1">
 <wire x1="1.27" y1="-1.905" x2="0" y2="0" width="0.254" layer="94"/>
 <wire x1="0" y1="0" x2="-1.27" y2="-1.905" width="0.254" layer="94"/>
 <text x="-2.54" y="-5.08" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
@@ -1117,7 +1180,7 @@ Source: AVX .. aphvc.pdf</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="GND" prefix="GND">
+<deviceset name="GND" urn="urn:adsk.eagle:component:26954/1" prefix="GND" library_version="1">
 <description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
 <gates>
 <gate name="1" symbol="GND" x="0" y="0"/>
@@ -1130,7 +1193,7 @@ Source: AVX .. aphvc.pdf</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="+5V" prefix="P+">
+<deviceset name="+5V" urn="urn:adsk.eagle:component:26963/1" prefix="P+" library_version="1">
 <description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
 <gates>
 <gate name="1" symbol="+5V" x="0" y="0"/>
@@ -1166,20 +1229,20 @@ Source: AVX .. aphvc.pdf</description>
 <part name="LED8" library="ftregan" deviceset="APA102" device=""/>
 <part name="C13" library="eagle-ltspice" library_urn="urn:adsk.eagle:library:217" deviceset="C" device="" package3d_urn="urn:adsk.eagle:package:13265/1"/>
 <part name="C14" library="eagle-ltspice" library_urn="urn:adsk.eagle:library:217" deviceset="C" device="" package3d_urn="urn:adsk.eagle:package:13265/1"/>
-<part name="GND1" library="supply1" deviceset="GND" device=""/>
-<part name="GND2" library="supply1" deviceset="GND" device=""/>
-<part name="P+1" library="supply1" deviceset="+5V" device=""/>
-<part name="P+3" library="supply1" deviceset="+5V" device=""/>
-<part name="P+2" library="supply1" deviceset="+5V" device=""/>
-<part name="P+4" library="supply1" deviceset="+5V" device=""/>
-<part name="GND3" library="supply1" deviceset="GND" device=""/>
-<part name="GND4" library="supply1" deviceset="GND" device=""/>
+<part name="GND1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="GND2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="P+1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
+<part name="P+3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
+<part name="P+2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
+<part name="P+4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
+<part name="GND3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="GND4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="LED9" library="ftregan" deviceset="APA102" device=""/>
 <part name="LED10" library="ftregan" deviceset="APA102" device=""/>
 <part name="LED11" library="ftregan" deviceset="APA102" device=""/>
 <part name="LED12" library="ftregan" deviceset="APA102" device=""/>
-<part name="P+5" library="supply1" deviceset="+5V" device=""/>
-<part name="GND5" library="supply1" deviceset="GND" device=""/>
+<part name="P+5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
+<part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="C1" library="eagle-ltspice" library_urn="urn:adsk.eagle:library:217" deviceset="C" device="" package3d_urn="urn:adsk.eagle:package:13265/1"/>
 <part name="C2" library="eagle-ltspice" library_urn="urn:adsk.eagle:library:217" deviceset="C" device="" package3d_urn="urn:adsk.eagle:package:13265/1"/>
 <part name="C3" library="eagle-ltspice" library_urn="urn:adsk.eagle:library:217" deviceset="C" device="" package3d_urn="urn:adsk.eagle:package:13265/1"/>
@@ -1192,6 +1255,8 @@ Source: AVX .. aphvc.pdf</description>
 <part name="C10" library="eagle-ltspice" library_urn="urn:adsk.eagle:library:217" deviceset="C" device="" package3d_urn="urn:adsk.eagle:package:13265/1"/>
 <part name="C11" library="eagle-ltspice" library_urn="urn:adsk.eagle:library:217" deviceset="C" device="" package3d_urn="urn:adsk.eagle:package:13265/1"/>
 <part name="C12" library="eagle-ltspice" library_urn="urn:adsk.eagle:library:217" deviceset="C" device="" package3d_urn="urn:adsk.eagle:package:13265/1"/>
+<part name="U$2" library="ftregan" deviceset="AVR_ISP_10" device=""/>
+<part name="GND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -1235,6 +1300,8 @@ Source: AVX .. aphvc.pdf</description>
 <instance part="C10" gate="G$1" x="328.93" y="-5.08" rot="R270"/>
 <instance part="C11" gate="G$1" x="328.93" y="-50.8" rot="R270"/>
 <instance part="C12" gate="G$1" x="328.93" y="-96.52" rot="R270"/>
+<instance part="U$2" gate="G$1" x="96.52" y="-22.86" rot="R270"/>
+<instance part="GND6" gate="1" x="114.3" y="-43.18"/>
 </instances>
 <busses>
 </busses>
@@ -1523,6 +1590,16 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="C11" gate="G$1" pin="2"/>
 <pinref part="C12" gate="G$1" pin="2"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="GND@1"/>
+<wire x1="111.76" y1="-33.02" x2="114.3" y2="-33.02" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="-33.02" x2="114.3" y2="-40.64" width="0.1524" layer="91"/>
+<pinref part="GND6" gate="1" pin="GND"/>
+<junction x="114.3" y="-33.02"/>
+<pinref part="U$2" gate="G$1" pin="GND@2"/>
+<wire x1="114.3" y1="-33.02" x2="114.3" y2="-27.94" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="-27.94" x2="111.76" y2="-27.94" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="+5V" class="0">
 <segment>
@@ -1745,6 +1822,51 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="289.56" y1="-81.28" x2="289.56" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="289.56" y1="55.88" x2="314.96" y2="55.88" width="0.1524" layer="91"/>
 <pinref part="LED8" gate="G$1" pin="CO"/>
+</segment>
+</net>
+<net name="N$7" class="0">
+<segment>
+<pinref part="U$2" gate="G$1" pin="MOSI"/>
+<wire x1="81.28" y1="-12.7" x2="60.96" y2="-12.7" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="-12.7" x2="58.42" y2="-10.16" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="MOSI0_PB3"/>
+<wire x1="58.42" y1="-10.16" x2="58.42" y2="5.08" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$8" class="0">
+<segment>
+<pinref part="U$2" gate="G$1" pin="MISO"/>
+<wire x1="81.28" y1="-33.02" x2="66.04" y2="-33.02" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="MISO0_PB4"/>
+<wire x1="66.04" y1="-33.02" x2="63.5" y2="-30.48" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="-30.48" x2="63.5" y2="5.08" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$12" class="0">
+<segment>
+<pinref part="U$2" gate="G$1" pin="SCK"/>
+<wire x1="81.28" y1="-27.94" x2="78.74" y2="-27.94" width="0.1524" layer="91"/>
+<wire x1="78.74" y1="-27.94" x2="76.2" y2="-25.4" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="-25.4" x2="76.2" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="-2.54" x2="78.74" y2="0" width="0.1524" layer="91"/>
+<wire x1="78.74" y1="0" x2="83.82" y2="0" width="0.1524" layer="91"/>
+<wire x1="83.82" y1="0" x2="86.36" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="2.54" x2="86.36" y2="22.86" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="SCK0_PB5"/>
+<wire x1="86.36" y1="22.86" x2="83.82" y2="25.4" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$14" class="0">
+<segment>
+<pinref part="U$2" gate="G$1" pin="RESET"/>
+<wire x1="81.28" y1="-22.86" x2="-10.16" y2="-22.86" width="0.1524" layer="91"/>
+<wire x1="-10.16" y1="-22.86" x2="-12.7" y2="-20.32" width="0.1524" layer="91"/>
+<wire x1="-12.7" y1="-20.32" x2="-12.7" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="-12.7" y1="88.9" x2="-10.16" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="-10.16" y1="91.44" x2="40.64" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="91.44" x2="43.18" y2="88.9" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="!RESET!_PC6"/>
+<wire x1="43.18" y1="88.9" x2="43.18" y2="81.28" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
