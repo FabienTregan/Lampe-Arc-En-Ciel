@@ -121,7 +121,7 @@ string connectSegments(void) {
       + ftpAngularMove(1.75)
       + ftpRadialMoveTo(OUTER_RADIUS - 0.9)
       + ftpAngularMoveTo(180 - (SEGMENT_ANGLE * (segment + 3.0/4 ) + 1))
-      + ftpRadialMoveTo(INNER_RADIUS + ROW_WIDTH * 0.5)
+      + ftpRadialMoveTo(INNER_RADIUS + ROW_WIDTH * 0.5 - 1.1)
       + ftpAngularMoveToContact(cCI)
       + ftpRadialMoveToContact(cCI)
       + ftpEnd();
@@ -165,7 +165,7 @@ string connectCaps(void) {
 
       result +=
         ftpStartFromContact(OUTER_RADIUS, 0, cCapVcc)
-        + ftpAngularMoveTo(180 - vccAngle + 0.0001); // Stup +0.0001 to prevent eagle from puting a stupid airwire :-/
+        + ftpAngularMoveTo(180 - vccAngle + 0.0001); // Stupid +0.0001 to prevent eagle from puting a stupid airwire :-/
 
       if(row == 0 ) {
         result +=
@@ -219,6 +219,7 @@ string place(void) {
 string connectMcu(void) {
   string result;
   string line;
+  real segment = 0;
 
   UL_ELEMENT mcu = findElement(mcuName);
   UL_ELEMENT led1 = findLed(1);
@@ -295,18 +296,15 @@ string connectMcu(void) {
 
   result +=
     ftpStartFromContact(OUTER_RADIUS, 0, cC13p2)
-    + ftpRadialMoveTo(INNER_RADIUS + 3);
+    + ftpRadialMoveTo(INNER_RADIUS + 5);
 
   result +=
     ftpStartFromContact(OUTER_RADIUS, 0, cC14p1)
-    + ftpRadialMove(1.5)
+    + ftpAngularMoveTo(180 - (SEGMENT_ANGLE * (segment + 3.0/4 ) + 2))
     + ftpVia()
     + ftpLayer(LAYER_TOP)
-    + ftpAngularMoveTo(155)
-    + ftpRadialMoveTo(67)
-    + ftpVia()
-    + ftpLayer(LAYER_BOTTOM)
-    + ftpRadialMoveTo(INNER_RADIUS + 3);
+    + ftpRadialMoveTo(INNER_RADIUS + 5)
+    + ftpVia();
 
 // ISP to MCU
 
