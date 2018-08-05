@@ -75,14 +75,10 @@
 </layers>
 <board>
 <plain>
-<wire x1="40" y1="0" x2="100" y2="0" width="0" layer="20"/>
-<wire x1="100" y1="0" x2="100" y2="60" width="0" layer="20"/>
-<wire x1="100" y1="100" x2="0" y2="100" width="0" layer="20"/>
-<wire x1="0" y1="100" x2="0" y2="0" width="0" layer="20"/>
-<wire x1="40" y1="0" x2="100" y2="60" width="0.5" layer="20" curve="-90"/>
-<wire x1="0" y1="0" x2="100" y2="100" width="0.5" layer="20" curve="-90"/>
-<wire x1="100" y1="100" x2="100" y2="60" width="0.5" layer="20"/>
-<wire x1="40" y1="0" x2="0" y2="0" width="0.5" layer="20"/>
+<wire x1="40" y1="0" x2="100" y2="60" width="0" layer="20" curve="-90"/>
+<wire x1="0" y1="0" x2="100" y2="100" width="0" layer="20" curve="-90"/>
+<wire x1="100" y1="100" x2="100" y2="60" width="0" layer="20"/>
+<wire x1="40" y1="0" x2="0" y2="0" width="0" layer="20"/>
 </plain>
 <libraries>
 <library name="eagle-ltspice" urn="urn:adsk.eagle:library:217">
@@ -150,12 +146,11 @@
 <smd name="30" x="-1.1938" y="4.1148" dx="0.508" dy="1.4732" layer="1" rot="R180"/>
 <smd name="31" x="-2.0066" y="4.1148" dx="0.508" dy="1.4732" layer="1" rot="R180"/>
 <smd name="32" x="-2.794" y="4.1148" dx="0.508" dy="1.4732" layer="1" rot="R180"/>
-<wire x1="-3.0734" y1="2.667" x2="-2.667" y2="3.0734" width="0.1524" layer="21"/>
+<wire x1="-2.9" y1="1.8" x2="-1.8" y2="2.9" width="0.1524" layer="21"/>
 <wire x1="-3.5052" y1="-3.5052" x2="-3.0226" y2="-3.5052" width="0" layer="51"/>
 <wire x1="-2.5654" y1="-3.5052" x2="-2.2352" y2="-3.5052" width="0" layer="51"/>
 <wire x1="-1.778" y1="-3.5052" x2="-1.4224" y2="-3.5052" width="0" layer="51"/>
 <wire x1="-0.9652" y1="-3.5052" x2="-0.635" y2="-3.5052" width="0" layer="51"/>
-<wire x1="-0.1778" y1="-3.5052" x2="0.1778" y2="-3.5052" width="0" layer="51"/>
 <wire x1="0.635" y1="-3.5052" x2="0.9652" y2="-3.5052" width="0" layer="51"/>
 <wire x1="1.4224" y1="-3.5052" x2="1.778" y2="-3.5052" width="0" layer="51"/>
 <wire x1="2.2352" y1="-3.5052" x2="2.5654" y2="-3.5052" width="0" layer="51"/>
@@ -164,7 +159,6 @@
 <wire x1="3.5052" y1="-2.5654" x2="3.5052" y2="-2.2352" width="0" layer="51"/>
 <wire x1="3.5052" y1="-1.778" x2="3.5052" y2="-1.4224" width="0" layer="51"/>
 <wire x1="3.5052" y1="-0.9652" x2="3.5052" y2="-0.635" width="0" layer="51"/>
-<wire x1="3.5052" y1="-0.1778" x2="3.5052" y2="0.1778" width="0" layer="51"/>
 <wire x1="3.5052" y1="0.635" x2="3.5052" y2="0.9652" width="0" layer="51"/>
 <wire x1="3.5052" y1="1.4224" x2="3.5052" y2="1.778" width="0" layer="51"/>
 <wire x1="3.5052" y1="2.2352" x2="3.5052" y2="2.5654" width="0" layer="51"/>
@@ -315,13 +309,13 @@
 <wire x1="3.5052" y1="2.5654" x2="4.4958" y2="2.5654" width="0" layer="51"/>
 <wire x1="4.4958" y1="2.5654" x2="4.4958" y2="3.0226" width="0" layer="51"/>
 <wire x1="4.4958" y1="3.0226" x2="3.5052" y2="3.0226" width="0" layer="51"/>
-<wire x1="-3.5052" y1="2.2352" x2="-2.2352" y2="3.5052" width="0" layer="51"/>
-<wire x1="-1.778" y1="-3.5052" x2="1.778" y2="-3.5052" width="0" layer="51"/>
-<wire x1="3.5052" y1="-2.2352" x2="3.5052" y2="2.2352" width="0" layer="51"/>
-<wire x1="2.5654" y1="3.5052" x2="-2.5654" y2="3.5052" width="0" layer="51"/>
-<wire x1="-3.5052" y1="3.0226" x2="-3.5052" y2="-3.0226" width="0" layer="51"/>
+<wire x1="-0.1778" y1="-3.5052" x2="0.1778" y2="-3.5052" width="0" layer="51"/>
+<wire x1="3.5052" y1="-0.1778" x2="3.5052" y2="0.1778" width="0" layer="51"/>
+<wire x1="0.1778" y1="3.5052" x2="-0.1778" y2="3.5052" width="0" layer="51"/>
+<wire x1="-3.5052" y1="0.635" x2="-3.5052" y2="-0.635" width="0" layer="51"/>
 <text x="-5.4864" y="-7.9756" size="2.0828" layer="25" ratio="10" rot="SR0">&gt;NAME</text>
 <text x="-3.4544" y="7.9756" size="2.0828" layer="27" ratio="10" rot="SR0">&gt;VALUE</text>
+<wire x1="-3.5" y1="1.2" x2="-1.2" y2="3.5" width="0" layer="51"/>
 </package>
 <package name="5050">
 <wire x1="-1.5" y1="-2.5" x2="-2.5" y2="-2.5" width="0.127" layer="21"/>
@@ -443,7 +437,7 @@ design rules under a new name.</description>
 <param name="mlMaxStopFrame" value="2mil"/>
 <param name="mlMinCreamFrame" value="0mil"/>
 <param name="mlMaxCreamFrame" value="0mil"/>
-<param name="mlViaStopLimit" value="100mil"/>
+<param name="mlViaStopLimit" value="0.49mm"/>
 <param name="srRoundness" value="0"/>
 <param name="srMinRoundness" value="0mil"/>
 <param name="srMaxRoundness" value="0mil"/>
@@ -849,10 +843,10 @@ design rules under a new name.</description>
 <wire x1="10.726434375" y1="35.16579375" x2="20.030609375" y2="31.50078125" width="0.5" layer="1"/>
 <wire x1="20.030609375" y1="31.50078125" x2="29.33478125" y2="27.835771875" width="0.5" layer="1"/>
 <via x="41.38369375" y="23.089578125" extent="1-16" drill="0.35"/>
-<wire x1="29.33478125" y1="27.835771875" x2="38.64218125" y2="24.1694875" width="0.5" layer="1"/>
-<wire x1="38.64218125" y1="24.1694875" x2="41.38369375" y2="23.089578125" width="0.5" layer="1"/>
+<wire x1="29.33478125" y1="27.835771875" x2="41.38369375" y2="23.089578125" width="0.5" layer="1"/>
 <wire x1="18.33446875" y1="26.798203125" x2="20.030609375" y2="31.50078125" width="0.5" layer="1" curve="-3.332967"/>
 <wire x1="27.974815625" y1="24.0992875" x2="29.33478125" y2="27.835771875" width="0.5" layer="1" curve="-3.000003"/>
+<wire x1="37.580675" y1="21.289215625" x2="38.638959375" y2="24.17075625" width="0.5" layer="1" curve="-2.667149"/>
 <wire x1="26.95125" y1="41.705446875" x2="25.822290625" y2="42.35" width="0.5" layer="16"/>
 <wire x1="25.822290625" y1="42.35" x2="25.565853125" y2="41.897646875" width="0.5" layer="16" curve="0.348799"/>
 <wire x1="25.565853125" y1="41.897646875" x2="24.180790625" y2="42.677275" width="0.5" layer="16"/>
@@ -866,7 +860,7 @@ design rules under a new name.</description>
 <wire x1="19.787059375" y1="37.403909375" x2="39.277378125" y2="28.315425" width="0.5" layer="1"/>
 <via x="39.277378125" y="28.315425" extent="1-16" drill="0.35"/>
 <wire x1="39.277378125" y1="28.315425" x2="42.902609375" y2="26.62495" width="0.5" layer="16"/>
-<wire x1="38.64218125" y1="24.1694875" x2="37.580675" y2="21.289215625" width="0.5" layer="1"/>
+<wire x1="41.38369375" y1="23.089578125" x2="38.638959375" y2="24.17075625" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$3">
 <contactref element="LED5" pad="2"/>

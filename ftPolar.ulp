@@ -153,3 +153,19 @@ string ftpAngularMoveToContact(UL_CONTACT c) {
 
   return ftpAngularMoveTo(modulus);
 }
+
+string ftpMoveToContact(UL_CONTACT c) {
+  real x = u2mm(c.x);
+  real y = u2mm(c.y);
+  real radius = ftpRadius(x, y);
+  string result;  
+
+  string line;
+  sprintf(line, "ROUTE (P %f %f) (%f %f);\n", _ftpRadius, _ftpModulus, x, y);
+  result += line;
+
+  _ftpRadius = ftpRadius(x, y);
+  _ftpModulus= ftpModulus(x, y);
+
+  return result;
+}

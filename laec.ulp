@@ -152,7 +152,7 @@ string connectCaps(void) {
     }
   }
 
-  for (segment = NB_SEGMENTS - 1 ; segment >= 0; segment--){
+  for (segment = 0; segment < NB_SEGMENTS; segment++){
     for(int row = 0; row < NB_ROWS; row++) {
 
       // start with the last led of each row so the big wire to +5V is there first.
@@ -165,7 +165,7 @@ string connectCaps(void) {
 
       result +=
         ftpStartFromContact(OUTER_RADIUS, 0, cCapVcc)
-        + ftpAngularMoveTo(180 - vccAngle);
+        + ftpAngularMoveTo(180 - vccAngle + 0.0001); // Stup +0.0001 to prevent eagle from puting a stupid airwire :-/
 
       if(row == 0 ) {
         result +=
@@ -322,8 +322,8 @@ string connectMcu(void) {
     + ftpLayer(LAYER_BOTTOM)
     + "SET snap_length 0;"
     + ftpRadialMoveToContact(cMcuReset)
-    + "SET snap_length 20mil;"
-    + ftpAngularMoveToContact(cMcuReset);
+    + ftpMoveToContact(cMcuReset)
+    + "SET snap_length 20mil;";
 
   UL_CONTACT cIspSck = findContact(eIsp, "7");
   UL_CONTACT cMcuSck = findContact(mcu, "17");
