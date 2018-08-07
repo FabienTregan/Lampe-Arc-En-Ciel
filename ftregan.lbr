@@ -7,7 +7,7 @@
 <setting keepoldvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
+<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -318,6 +318,16 @@
 <text x="2.54" y="-2.54" size="1.27" layer="21" align="top-center">C</text>
 <text x="5.08" y="-2.54" size="1.27" layer="21" align="top-center">I</text>
 </package>
+<package name="12MM_ROUND">
+<circle x="0" y="0" radius="6" width="0.5" layer="21"/>
+<smd name="1" x="0" y="0" dx="7" dy="7" layer="1" stop="no" thermals="no" cream="no"/>
+<polygon width="0.5" layer="1">
+<vertex x="-6" y="0" curve="-90"/>
+<vertex x="0" y="6" curve="-90"/>
+<vertex x="6" y="0" curve="-90"/>
+<vertex x="0" y="-6" curve="-90"/>
+</polygon>
+</package>
 </packages>
 <symbols>
 <symbol name="APA102">
@@ -390,6 +400,9 @@
 <wire x1="15.24" y1="10.16" x2="-15.24" y2="10.16" width="0.254" layer="94"/>
 <pin name="GND@2" x="5.08" y="15.24" length="middle" rot="R270"/>
 <pin name="NC" x="-5.08" y="-15.24" length="middle" rot="R90"/>
+</symbol>
+<symbol name="CAP_TOUCH">
+<pin name="P$1" x="0" y="5.08" length="middle" rot="R270"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -476,6 +489,21 @@
 <connect gate="G$1" pin="SCK" pad="7"/>
 <connect gate="G$1" pin="TXD" pad="4"/>
 <connect gate="G$1" pin="VTARG" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TOUCH_12MM_ROUND">
+<gates>
+<gate name="G$1" symbol="CAP_TOUCH" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="12MM_ROUND">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
 </connects>
 <technologies>
 <technology name=""/>

@@ -6,6 +6,7 @@ string CMD_ROWS = "rows";
 string CMD_CAPS = "caps";
 string CMD_SEGMENTS = "segments";
 string CMD_MCU = "mcu";
+string CMD_TOUCHES = "touches";
 string CMD_TEST = "test";
  
 string PIN_DI  = "1";
@@ -32,8 +33,11 @@ real MIDDLE_RADIUS = ( INNER_RADIUS + OUTER_RADIUS ) / 2;
 string mcuName = "U$1";
 int MCU_SEGMENT = 1;
 real mcuModulus = 180 - SEGMENT_ANGLE * (MCU_SEGMENT + 1);
+
 string ispName = "U$2";
 real ispModulus = mcuModulus - 8.5;
+
+int NB_TOUCHES = 4;
 
 real angleToCenter(real x, real y) {
   return atan((y - 0) / (x - OUTER_RADIUS)) * 180 / PI;
@@ -48,6 +52,12 @@ string ledName(int n) {
 string capName(int n) {
   string result;
   sprintf(result, "C%d", n);
+  return result;
+}
+
+string touchName(int n) {
+  string result;
+  sprintf(result, "TOUCH_%d", n);
   return result;
 }
 
@@ -213,6 +223,13 @@ string place(void) {
   result += line;
   sprintf(line, "MOVE '%s' (AP %f %f); ROTATE =MR%f '%s';\n", "C14", MIDDLE_RADIUS + 7, mcuModulus, - (90 + mcuModulus ), "C14");
   result += line;
+
+  for(int n = 0; n < NB_TOUCHES; n++) {
+    string touchN= touchName(n + 1);
+    real angle = 15 + 10 * n;
+    sprintf(line, "MOVE '%s' (P %f %f);\n", touchN, 90.0, 180 - angle);
+    result += line;
+  }
  
   return result;
 }
@@ -360,6 +377,30 @@ string connectMcu(void) {
   return result;
 }
 
+string connectTouches(void) {
+
+  string result;
+
+  UL_ELEMENT mcu = findElement(mcuName);
+
+  for(int n = 0; n < NB_TOUCHES; n++) {
+
+    UL_ELEMENT touch = findElement(touchName(n + 1));
+    UL_CONTACT cTouch = findContact(touch, "1");
+
+    string mcuPinName;
+    sprintf(mcuPinName, "%d", 25 + n);
+    UL_CONTACT cMcuPin = findContact(mcu, mcuPinName);
+
+    result +=
+      ftpStartFromContact(OUTER_RADIUS, 0, cMcuPin)
+      + ftpAngularMoveToContact(cTouch)
+      + ftpRadialMoveToContact(cTouch);
+
+  }
+
+  return result;
+}
 
 void main() {
   string script;
@@ -371,6 +412,7 @@ void main() {
     script += "run laec.ulp " + CMD_ROWS + ";";
     script += "run laec.ulp " + CMD_CAPS + ";";
     script += "run laec.ulp " + CMD_SEGMENTS + ";";
+    script += "run laec.ulp " + CMD_TOUCHES + ";";
     script += "run laec.ulp " + CMD_MCU + ";";
   } else if (argv[1] == CMD_PLACE) {
     script = place();
@@ -382,6 +424,8 @@ void main() {
     script = connectSegments();
   } else if (argv[1] == CMD_MCU) {
     script = connectMcu();
+  } else if (argv[1] == CMD_TOUCHES) {
+    script = connectTouches();
   } else if (argv[1] == CMD_TEST) {
   }
 

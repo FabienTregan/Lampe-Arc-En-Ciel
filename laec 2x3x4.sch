@@ -320,6 +320,16 @@
 <text x="2.54" y="-2.54" size="1.27" layer="21" align="top-center">C</text>
 <text x="5.08" y="-2.54" size="1.27" layer="21" align="top-center">I</text>
 </package>
+<package name="12MM_ROUND">
+<circle x="0" y="0" radius="6" width="0.5" layer="21"/>
+<smd name="1" x="0" y="0" dx="7" dy="7" layer="1" stop="no" thermals="no" cream="no"/>
+<polygon width="0.5" layer="1">
+<vertex x="-6" y="0" curve="-90"/>
+<vertex x="0" y="6" curve="-90"/>
+<vertex x="6" y="0" curve="-90"/>
+<vertex x="0" y="-6" curve="-90"/>
+</polygon>
+</package>
 </packages>
 <symbols>
 <symbol name="ATMEGA328PB-AU">
@@ -392,6 +402,9 @@
 <wire x1="15.24" y1="10.16" x2="-15.24" y2="10.16" width="0.254" layer="94"/>
 <pin name="GND@2" x="5.08" y="15.24" length="middle" rot="R270"/>
 <pin name="NC" x="-5.08" y="-15.24" length="middle" rot="R90"/>
+</symbol>
+<symbol name="CAP_TOUCH">
+<pin name="P$1" x="0" y="5.08" length="middle" rot="R270"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -478,6 +491,21 @@
 <connect gate="G$1" pin="SCK" pad="7"/>
 <connect gate="G$1" pin="TXD" pad="4"/>
 <connect gate="G$1" pin="VTARG" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CAP_TOUCH_12MM_ROUND">
+<gates>
+<gate name="G$1" symbol="CAP_TOUCH" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="12MM_ROUND">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -1255,6 +1283,10 @@ Source: AVX .. aphvc.pdf</description>
 <part name="C12" library="eagle-ltspice" library_urn="urn:adsk.eagle:library:217" deviceset="C" device="" package3d_urn="urn:adsk.eagle:package:13265/1"/>
 <part name="U$2" library="ftregan" deviceset="AVR_ISP_10" device=""/>
 <part name="GND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="TOUCH_4" library="ftregan" deviceset="CAP_TOUCH_12MM_ROUND" device=""/>
+<part name="TOUCH_3" library="ftregan" deviceset="CAP_TOUCH_12MM_ROUND" device=""/>
+<part name="TOUCH_2" library="ftregan" deviceset="CAP_TOUCH_12MM_ROUND" device=""/>
+<part name="TOUCH_1" library="ftregan" deviceset="CAP_TOUCH_12MM_ROUND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -1300,6 +1332,10 @@ Source: AVX .. aphvc.pdf</description>
 <instance part="C12" gate="G$1" x="328.93" y="-96.52" rot="R270"/>
 <instance part="U$2" gate="G$1" x="96.52" y="-22.86" rot="R270"/>
 <instance part="GND6" gate="1" x="114.3" y="-43.18"/>
+<instance part="TOUCH_4" gate="G$1" x="48.26" y="106.68" rot="R180"/>
+<instance part="TOUCH_3" gate="G$1" x="53.34" y="106.68" rot="R180"/>
+<instance part="TOUCH_2" gate="G$1" x="58.42" y="106.68" rot="R180"/>
+<instance part="TOUCH_1" gate="G$1" x="63.5" y="106.68" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -1865,6 +1901,34 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="40.64" y1="91.44" x2="43.18" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="U$1" gate="G$1" pin="!RESET!_PC6"/>
 <wire x1="43.18" y1="88.9" x2="43.18" y2="81.28" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$11" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="PC2"/>
+<wire x1="63.5" y1="81.28" x2="63.5" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="TOUCH_1" gate="G$1" pin="P$1"/>
+</segment>
+</net>
+<net name="N$19" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="PC3"/>
+<wire x1="58.42" y1="101.6" x2="58.42" y2="81.28" width="0.1524" layer="91"/>
+<pinref part="TOUCH_2" gate="G$1" pin="P$1"/>
+</segment>
+</net>
+<net name="N$20" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="PC5"/>
+<pinref part="TOUCH_4" gate="G$1" pin="P$1"/>
+<wire x1="48.26" y1="81.28" x2="48.26" y2="101.6" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$23" class="0">
+<segment>
+<pinref part="TOUCH_3" gate="G$1" pin="P$1"/>
+<pinref part="U$1" gate="G$1" pin="PC4"/>
+<wire x1="53.34" y1="101.6" x2="53.34" y2="81.28" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
