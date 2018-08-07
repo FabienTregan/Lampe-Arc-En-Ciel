@@ -30,7 +30,8 @@ real INNER_RADIUS = OUTER_RADIUS - ROW_WIDTH * NB_ROWS;
 real MIDDLE_RADIUS = ( INNER_RADIUS + OUTER_RADIUS ) / 2;
 
 string mcuName = "U$1";
-real mcuModulus = 180 - SEGMENT_ANGLE;
+int MCU_SEGMENT = 1;
+real mcuModulus = 180 - SEGMENT_ANGLE * (MCU_SEGMENT + 1);
 string ispName = "U$2";
 real ispModulus = mcuModulus - 8.5;
 
@@ -219,7 +220,6 @@ string place(void) {
 string connectMcu(void) {
   string result;
   string line;
-  real segment = 0;
 
   UL_ELEMENT mcu = findElement(mcuName);
   UL_ELEMENT led1 = findLed(1);
@@ -300,7 +300,7 @@ string connectMcu(void) {
 
   result +=
     ftpStartFromContact(OUTER_RADIUS, 0, cC14p1)
-    + ftpAngularMoveTo(180 - (SEGMENT_ANGLE * (segment + 3.0/4 ) + 2))
+    + ftpAngularMoveTo(180 - (SEGMENT_ANGLE * (MCU_SEGMENT + 3.0/4) + 2))
     + ftpVia()
     + ftpLayer(LAYER_TOP)
     + ftpRadialMoveTo(INNER_RADIUS + 5)
@@ -315,7 +315,7 @@ string connectMcu(void) {
   result +=
     ftpStartFromContact(OUTER_RADIUS, 0, cIspReset)
     + ftpLayer(LAYER_TOP)
-    + ftpAngularMoveTo(151)
+    + ftpAngularMoveTo(mcuModulus + 1)
     + ftpVia()
     + ftpLayer(LAYER_BOTTOM)
     + "SET snap_length 0;"
