@@ -39,6 +39,12 @@ real ispModulus = mcuModulus - 8.5;
 
 int NB_TOUCHES = 4;
 
+void showReal(string description, real x) {
+  string s;
+  sprintf(s, "%s: %f.", description, x);
+  dlgMessageBox(s);
+}
+
 real angleToCenter(real x, real y) {
   return atan((y - 0) / (x - OUTER_RADIUS)) * 180 / PI;
 }
@@ -106,25 +112,30 @@ string connectRows(void) {
 
 string connectSegments(void) {
   string result = "CHANG WIDTH 0.5;";
-  for (int segment = 0; segment < NB_SEGMENTS -1; segment++){
+  for (int segment = 0; segment < NB_SEGMENTS; segment++){
 
     int n = (1 + segment) * NB_ROWS;
 
     UL_ELEMENT ledFrom = findLed(n);
-    UL_ELEMENT ledTo = findLed(n + 1);
 
-    UL_CONTACT cDO= findContact(ledFrom, PIN_DO);
-    UL_CONTACT cDI= findContact(ledTo, PIN_DI);
+    UL_CONTACT cDO = findContact(ledFrom, PIN_DO);
 
     result +=
       ftpStartFromContact(OUTER_RADIUS, 0, cDO)
       + ftpRadialMoveTo(OUTER_RADIUS - 1.7)
       + ftpAngularMoveTo(180 - (SEGMENT_ANGLE * (segment + 3.0/4 ) - 0))
-      + ftpRadialMoveToContact(cDI)
-      + ftpAngularMoveToContact(cDI);
+
+      + ftpRadialMoveTo(79);
+
+    if(segment < NB_SEGMENTS - 1) {
+      UL_ELEMENT ledTo = findLed(n + 1);
+      UL_CONTACT cDI= findContact(ledTo, PIN_DI);
+      result +=
+        ftpRadialMoveToContact(cDI)
+        + ftpAngularMoveToContact(cDI);
+    }
 
     UL_CONTACT cCO = findContact(ledFrom, PIN_CO);
-    UL_CONTACT cCI = findContact(ledTo, PIN_CI);
 
     result +=
       ftpStartFromContact(OUTER_RADIUS, 0, cCO)
@@ -132,12 +143,21 @@ string connectSegments(void) {
       + ftpAngularMove(1.75)
       + ftpRadialMoveTo(OUTER_RADIUS - 0.9)
       + ftpAngularMoveTo(180 - (SEGMENT_ANGLE * (segment + 3.0/4 ) + 1))
-      + ftpRadialMoveTo(INNER_RADIUS + ROW_WIDTH * 0.5 - 1.1)
-      + ftpAngularMoveToContact(cCI)
-      + ftpRadialMoveToContact(cCI)
-      + ftpEnd();
+
+      + ftpRadialMoveTo(81);
+
+    if(segment < NB_SEGMENTS - 1) {
+      UL_ELEMENT ledTo = findLed(n + 1);
+      UL_CONTACT cCI = findContact(ledTo, PIN_CI);
+      result +=
+        ftpRadialMoveTo(INNER_RADIUS + ROW_WIDTH * 0.5 - 1.1)
+        + ftpAngularMoveToContact(cCI)
+        + ftpRadialMoveToContact(cCI);
+    }
+
   } 
 
+  result += ftpEnd();
   return result;
 }
 
@@ -180,7 +200,7 @@ string connectCaps(void) {
 
       if(row == 0 ) {
         result +=
-          ftpRadialMoveTo(INNER_RADIUS + 3)
+          ftpRadialMoveTo(INNER_RADIUS + 4)
           + ftpVia();
       }
     }

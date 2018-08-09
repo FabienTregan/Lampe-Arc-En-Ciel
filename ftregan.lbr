@@ -7,7 +7,7 @@
 <setting keepoldvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
+<grid distance="50" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -298,15 +298,15 @@
 </package>
 <package name="AVR_ISP_2X5">
 <pad name="1" x="-5.08" y="-1.27" drill="0.9398" diameter="1.524" shape="square"/>
-<pad name="2" x="-5.08" y="1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
-<pad name="3" x="-2.54" y="-1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
-<pad name="4" x="-2.54" y="1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
-<pad name="5" x="0" y="-1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
-<pad name="6" x="0" y="1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
-<pad name="7" x="2.54" y="-1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
-<pad name="8" x="2.54" y="1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
-<pad name="9" x="5.08" y="-1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
-<pad name="10" x="5.08" y="1.27" drill="0.9398" diameter="1.524" shape="octagon"/>
+<pad name="2" x="-5.08" y="1.27" drill="0.9398" diameter="1.524"/>
+<pad name="3" x="-2.54" y="-1.27" drill="0.9398" diameter="1.524"/>
+<pad name="4" x="-2.54" y="1.27" drill="0.9398" diameter="1.524"/>
+<pad name="5" x="0" y="-1.27" drill="0.9398" diameter="1.524"/>
+<pad name="6" x="0" y="1.27" drill="0.9398" diameter="1.524"/>
+<pad name="7" x="2.54" y="-1.27" drill="0.9398" diameter="1.524"/>
+<pad name="8" x="2.54" y="1.27" drill="0.9398" diameter="1.524"/>
+<pad name="9" x="5.08" y="-1.27" drill="0.9398" diameter="1.524"/>
+<pad name="10" x="5.08" y="1.27" drill="0.9398" diameter="1.524"/>
 <text x="-5.08" y="-2.54" size="1.27" layer="21" align="top-center">O</text>
 <text x="-5.08" y="2.54" size="1.27" layer="21" align="bottom-center">V</text>
 <text x="-2.54" y="2.54" size="1.27" layer="21" align="bottom-center">T.</text>
@@ -327,6 +327,9 @@
 <vertex x="6" y="0" curve="-90"/>
 <vertex x="0" y="-6" curve="-90"/>
 </polygon>
+</package>
+<package name="37MIL_HOLE">
+<pad name="1" x="0" y="0" drill="0.6" diameter="0.9398"/>
 </package>
 </packages>
 <symbols>
@@ -402,6 +405,9 @@
 <pin name="NC" x="-5.08" y="-15.24" length="middle" rot="R90"/>
 </symbol>
 <symbol name="CAP_TOUCH">
+<pin name="P$1" x="0" y="5.08" length="middle" rot="R270"/>
+</symbol>
+<symbol name="PAD">
 <pin name="P$1" x="0" y="5.08" length="middle" rot="R270"/>
 </symbol>
 </symbols>
@@ -502,6 +508,21 @@
 </gates>
 <devices>
 <device name="" package="12MM_ROUND">
+<connects>
+<connect gate="G$1" pin="P$1" pad="1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="37MIL_HOLE">
+<gates>
+<gate name="G$1" symbol="PAD" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="37MIL_HOLE">
 <connects>
 <connect gate="G$1" pin="P$1" pad="1"/>
 </connects>
