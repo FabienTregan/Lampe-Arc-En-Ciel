@@ -370,7 +370,7 @@
 </polygon>
 </package>
 <package name="37MIL_HOLE">
-<pad name="1" x="0" y="0" drill="0.6" diameter="0.9398"/>
+<pad name="1" x="0" y="0" drill="0.9398"/>
 </package>
 </packages>
 </library>
@@ -644,10 +644,10 @@ design rules under a new name.</description>
 <element name="TOUCH_3" library="ftregan" package="12MM_ROUND" value="CAP_TOUCH_12MM_ROUND" x="26.276315625" y="51.621878125" rot="MR0"/>
 <element name="TOUCH_2" library="ftregan" package="12MM_ROUND" value="CAP_TOUCH_12MM_ROUND" x="18.4323" y="38.03564375" rot="MR0"/>
 <element name="TOUCH_1" library="ftregan" package="12MM_ROUND" value="CAP_TOUCH_12MM_ROUND" x="13.066675" y="23.2937125" rot="MR0"/>
-<element name="U$3" library="ftregan" package="37MIL_HOLE" value="37MIL_HOLE" x="98.723996875" y="78.692815625"/>
-<element name="U$4" library="ftregan" package="37MIL_HOLE" value="37MIL_HOLE" x="98.63483125" y="81.353625"/>
-<element name="U$5" library="ftregan" package="37MIL_HOLE" value="37MIL_HOLE" x="16.91440625" y="1.929084375"/>
-<element name="U$6" library="ftregan" package="37MIL_HOLE" value="37MIL_HOLE" x="20.969415625" y="1.8278625"/>
+<element name="SEG_DO" library="ftregan" package="37MIL_HOLE" value="37MIL_HOLE" x="0" y="-12.7"/>
+<element name="SEG_CO" library="ftregan" package="37MIL_HOLE" value="37MIL_HOLE" x="0" y="-25.4"/>
+<element name="SEG_CI" library="ftregan" package="37MIL_HOLE" value="37MIL_HOLE" x="0" y="-38.1"/>
+<element name="SEG_DI" library="ftregan" package="37MIL_HOLE" value="37MIL_HOLE" x="0" y="-50.8"/>
 </elements>
 <signals>
 <signal name="N$1">
@@ -722,24 +722,24 @@ design rules under a new name.</description>
 <signal name="N$53">
 <contactref element="U$1" pad="24"/>
 <contactref element="LED1" pad="1"/>
-<contactref element="U$6" pad="1"/>
+<contactref element="SEG_DI" pad="1"/>
 <wire x1="38.925746875" y1="14.708353125" x2="37.95304375" y2="9.827271875" width="0.5" layer="1" curve="4.54055"/>
 <wire x1="37.95304375" y1="9.827271875" x2="24.998290625" y2="11.879103125" width="0.5" layer="1"/>
 <via x="24.998290625" y="11.879103125" extent="1-16" drill="0.35"/>
 <wire x1="24.998290625" y1="11.879103125" x2="59.637728125" y2="64.321509375" width="0.5" layer="16" curve="-48.891394"/>
-<wire x1="20.969415625" y1="1.8278625" x2="24.998290625" y2="11.879103125" width="0" layer="19" extent="1-1"/>
+<wire x1="0" y1="-50.8" x2="24.998290625" y2="11.879103125" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$54">
 <contactref element="LED1" pad="2"/>
 <contactref element="U$1" pad="23"/>
-<contactref element="U$5" pad="1"/>
+<contactref element="SEG_CI" pad="1"/>
 <wire x1="39.33985625" y1="16.253834375" x2="37.6494875" y2="16.706765625" width="0.5" layer="1"/>
 <wire x1="37.6494875" y1="16.706765625" x2="36.582828125" y2="12.040125" width="0.5" layer="1" curve="4.249998"/>
 <wire x1="36.582828125" y1="12.040125" x2="26.6485625" y2="13.92620625" width="0.5" layer="1"/>
 <via x="26.6485625" y="13.92620625" extent="1-16" drill="0.35"/>
 <wire x1="26.6485625" y1="13.92620625" x2="60.97303125" y2="63.649575" width="0.5" layer="16" curve="-47.735303"/>
 <wire x1="60.97303125" y1="63.649575" x2="60.319634375" y2="64.715209375" width="0.5" layer="16"/>
-<wire x1="16.91440625" y1="1.929084375" x2="26.6485625" y2="13.92620625" width="0" layer="19" extent="1-1"/>
+<wire x1="0" y1="-38.1" x2="26.6485625" y2="13.92620625" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="GND">
 <contactref element="U$1" pad="5"/>
@@ -1048,21 +1048,21 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$24">
 <contactref element="LED12" pad="6"/>
-<contactref element="U$3" pad="1"/>
+<contactref element="SEG_DO" pad="1"/>
 <wire x1="73.29730625" y1="93.473878125" x2="72.998771875" y2="94.51890625" width="0.5" layer="1"/>
 <wire x1="72.998771875" y1="94.51890625" x2="87.169275" y2="97.45903125" width="0.5" layer="1" curve="-8.443057"/>
 <wire x1="87.169275" y1="97.45903125" x2="89.68843125" y2="78.32414375" width="0.5" layer="1"/>
-<wire x1="89.68843125" y1="78.32414375" x2="98.723996875" y2="78.692815625" width="0" layer="19" extent="1-1"/>
+<wire x1="89.68843125" y1="78.32414375" x2="0" y2="-12.7" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$27">
 <contactref element="LED12" pad="5"/>
-<contactref element="U$4" pad="1"/>
+<contactref element="SEG_CO" pad="1"/>
 <wire x1="74.8427875" y1="93.8879875" x2="75.10160625" y2="92.9220625" width="0.5" layer="1"/>
 <wire x1="75.10160625" y1="92.9220625" x2="72.27551875" y2="92.1183625" width="0.5" layer="1" curve="1.749999"/>
 <wire x1="72.27551875" y1="92.1183625" x2="71.439746875" y2="94.895321875" width="0.5" layer="1"/>
 <wire x1="71.439746875" y1="94.895321875" x2="88.7815625" y2="98.462971875" width="0.5" layer="1" curve="-10.250002"/>
 <wire x1="88.7815625" y1="98.462971875" x2="90.830540625" y2="80.47931875" width="0.5" layer="1"/>
-<wire x1="90.830540625" y1="80.47931875" x2="98.63483125" y2="81.353625" width="0" layer="19" extent="1-1"/>
+<wire x1="90.830540625" y1="80.47931875" x2="0" y2="-25.4" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>

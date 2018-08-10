@@ -121,7 +121,7 @@ string connectSegments(void) {
     UL_CONTACT cDO = findContact(ledFrom, PIN_DO);
 
     result +=
-      ftpStartFromContact(OUTER_RADIUS, 0, cDO)
+      ftpJumpToContact(cDO)
       + ftpRadialMoveTo(OUTER_RADIUS - 1.7)
       + ftpAngularMoveTo(180 - (SEGMENT_ANGLE * (segment + 3.0/4 ) - 0))
 
@@ -138,7 +138,7 @@ string connectSegments(void) {
     UL_CONTACT cCO = findContact(ledFrom, PIN_CO);
 
     result +=
-      ftpStartFromContact(OUTER_RADIUS, 0, cCO)
+      ftpJumpToContact(cCO)
       + ftpRadialMove(-1)
       + ftpAngularMove(1.75)
       + ftpRadialMoveTo(OUTER_RADIUS - 0.9)
@@ -157,7 +157,6 @@ string connectSegments(void) {
 
   } 
 
-  result += ftpEnd();
   return result;
 }
 
@@ -177,7 +176,7 @@ string connectCaps(void) {
       UL_CONTACT cCap2 = findContact(eCap, "2");
 
       result +=
-        ftpStartFromContact(OUTER_RADIUS, 0, cVCC)
+        ftpJumpToContact(cVCC)
         + ftpAngularMoveToContact(cCap1)
         + ftpRadialMoveToContact(cCap1);
     }
@@ -195,7 +194,7 @@ string connectCaps(void) {
       UL_CONTACT cCapVcc = findContact(eCap, "1");
 
       result +=
-        ftpStartFromContact(OUTER_RADIUS, 0, cCapVcc)
+        ftpJumpToContact(cCapVcc)
         + ftpAngularMoveTo(180 - vccAngle + 0.0001); // Stupid +0.0001 to prevent eagle from puting a stupid airwire :-/
 
       if(row == 0 ) {
@@ -205,8 +204,6 @@ string connectCaps(void) {
       }
     }
   }
-
-  result += ftpEnd();
 
   return result;
 }
@@ -267,7 +264,7 @@ string connectMcu(void) {
   UL_CONTACT cDO = findContact(mcu, PIN_MCU_DO);
 
   result +=
-    ftpStartFromContact(OUTER_RADIUS, 0, cDI)
+    ftpJumpToContact( cDI)
     + ftpAngularMoveTo(171)
     + ftpRadialMoveToContact(cDO)
     + ftpVia()
@@ -279,7 +276,7 @@ string connectMcu(void) {
   UL_CONTACT cCO = findContact(mcu, PIN_MCU_CO);
 
   result +=
-    ftpStartFromContact(OUTER_RADIUS, 0, cCI)
+    ftpJumpToContact(cCI)
     + ftpRadialMove(1.75)
     + ftpAngularMoveTo(169.25)
     + ftpRadialMoveTo(ftpRadius(u2mm(cCO.x), u2mm(cCO.y)) - 1.25 )
@@ -296,7 +293,7 @@ string connectMcu(void) {
 // Mcu to capacitors
 
   result +=
-    ftpStartFromContact(OUTER_RADIUS, 0, cVccTop)
+    ftpJumpToContact(cVccTop)
     + ftpRadialMove(1.30)
     + ftpAngularMoveToContact(cC14p1)
     + ftpRadialMoveToContact(cC14p1);
@@ -305,7 +302,7 @@ string connectMcu(void) {
   UL_CONTACT cC14p2 = findContact(cap14, "2");
 
   result +=
-    ftpStartFromContact(OUTER_RADIUS, 0, cGndTop)
+    ftpJumpToContact(cGndTop)
     + ftpRadialMove(1.30)
     + ftpAngularMoveToContact(cC14p2)
     + ftpRadialMoveToContact(cC14p2);
@@ -315,7 +312,7 @@ string connectMcu(void) {
   UL_CONTACT cC13p2 = findContact(cap13, "2");
 
   result +=
-    ftpStartFromContact(OUTER_RADIUS, 0, cVccBot)
+    ftpJumpToContact(cVccBot)
     + ftpRadialMove(-1.30)
     + ftpAngularMoveToContact(cC13p2)
     + ftpRadialMoveToContact(cC13p2);
@@ -324,7 +321,7 @@ string connectMcu(void) {
   UL_CONTACT cC13p1 = findContact(cap13, "1");
 
   result +=
-    ftpStartFromContact(OUTER_RADIUS, 0, cGndBot)
+    ftpJumpToContact(cGndBot)
     + ftpRadialMove(-1.30)
     + ftpAngularMoveToContact(cC13p1)
     + ftpRadialMoveToContact(cC13p1);
@@ -332,11 +329,11 @@ string connectMcu(void) {
 // Caps to +5V
 
   result +=
-    ftpStartFromContact(OUTER_RADIUS, 0, cC13p2)
+    ftpJumpToContact(cC13p2)
     + ftpRadialMoveTo(INNER_RADIUS + 5);
 
   result +=
-    ftpStartFromContact(OUTER_RADIUS, 0, cC14p1)
+    ftpJumpToContact(cC14p1)
     + ftpAngularMoveTo(180 - (SEGMENT_ANGLE * (MCU_SEGMENT + 3.0/4) + 2))
     + ftpVia()
     + ftpLayer(LAYER_TOP)
@@ -350,7 +347,7 @@ string connectMcu(void) {
   UL_CONTACT cMcuReset = findContact(mcu, "29");
 
   result +=
-    ftpStartFromContact(OUTER_RADIUS, 0, cIspReset)
+    ftpJumpToContact(cIspReset)
     + ftpLayer(LAYER_TOP)
     + ftpAngularMoveTo(mcuModulus + 1)
     + ftpVia()
@@ -364,7 +361,7 @@ string connectMcu(void) {
   UL_CONTACT cMcuSck = findContact(mcu, "17");
 
   result +=
-    ftpStartFromContact(OUTER_RADIUS, 0, cIspSck)
+    ftpJumpToContact( cIspSck)
     + ftpAngularMove(1.5)
     + ftpRadialMoveToContact(cMcuSck)
     + ftpAngularMoveToContact(cMcuSck);
@@ -373,7 +370,7 @@ string connectMcu(void) {
   UL_CONTACT cMcuMiso = findContact(mcu, "16");
 
   result +=
-    ftpStartFromContact(OUTER_RADIUS, 0, cIspMiso)
+    ftpJumpToContact(cIspMiso)
     + ftpAngularMove(2.5)
     + ftpRadialMoveToContact(cMcuMiso)
     + ftpAngularMoveToContact(cMcuMiso);
@@ -383,7 +380,7 @@ string connectMcu(void) {
 
   result +=
     ftpLayer(LAYER_TOP)
-    + ftpStartFromContact(OUTER_RADIUS, 0, cIspMosi)
+    + ftpJumpToContact(cIspMosi)
     + ftpAngularMove(3.5)
     + ftpRadialMoveToContact(cMcuMosi)
     + "SET snap_length 0;"
@@ -393,7 +390,6 @@ string connectMcu(void) {
     + ftpLayer(LAYER_BOTTOM)
     + ftpAngularMoveToContact(cMcuMosi);
 
-  result += ftpEnd();
   return result;
 }
 
@@ -413,7 +409,7 @@ string connectTouches(void) {
     UL_CONTACT cMcuPin = findContact(mcu, mcuPinName);
 
     result +=
-      ftpStartFromContact(OUTER_RADIUS, 0, cMcuPin)
+      ftpJumpToContact(cMcuPin)
       + ftpAngularMoveToContact(cTouch)
       + ftpRadialMoveToContact(cTouch);
 
@@ -423,30 +419,45 @@ string connectTouches(void) {
 }
 
 void main() {
-  string script;
+  string script = "";
 
   // This hack allows to execute each script before executing the next one.
   // This allows the parts to be positionned by previous script before the next one is executed.
   if(argc == 1) {
-    script = "run laec.ulp " + CMD_PLACE + ";";
-    script += "run laec.ulp " + CMD_ROWS + ";";
-    script += "run laec.ulp " + CMD_CAPS + ";";
-    script += "run laec.ulp " + CMD_SEGMENTS + ";";
-    script += "run laec.ulp " + CMD_TOUCHES + ";";
-    script += "run laec.ulp " + CMD_MCU + ";";
-  } else if (argv[1] == CMD_PLACE) {
-    script = place();
-  } else if (argv[1] == CMD_ROWS) {
-    script = connectRows();
-  } else if (argv[1] == CMD_CAPS) {
-    script = connectCaps();
-  } else if (argv[1] == CMD_SEGMENTS) {
-    script = connectSegments();
-  } else if (argv[1] == CMD_MCU) {
-    script = connectMcu();
-  } else if (argv[1] == CMD_TOUCHES) {
-    script = connectTouches();
-  } else if (argv[1] == CMD_TEST) {
+    script =
+      "run laec.ulp " + CMD_PLACE + ";\n"
+      + "run laec.ulp " + CMD_ROWS + ";\n"
+      + "run laec.ulp " + CMD_CAPS + ";\n"
+      + "run laec.ulp " + CMD_SEGMENTS + ";\n"
+      + "run laec.ulp " + CMD_TOUCHES + ";\n"
+      + "run laec.ulp " + CMD_MCU + ";\n";
+  } else {
+
+    script = ftpStart(OUTER_RADIUS, 0);
+
+    if (argv[1] == CMD_PLACE) {
+      script += place();
+    } else if (argv[1] == CMD_ROWS) {
+      script += connectRows();
+    } else if (argv[1] == CMD_CAPS) {
+      script += connectCaps();
+    } else if (argv[1] == CMD_SEGMENTS) {
+      script += connectSegments();
+    } else if (argv[1] == CMD_MCU) {
+      script += connectMcu();
+    } else if (argv[1] == CMD_TOUCHES) {
+      script += connectTouches();
+    } else if (argv[1] == CMD_TEST) {
+    }
+
+    script += ftpEnd();
+
+    string fileName = "scripts/_script_" + argv[1] + ".scr";
+    output(fileName, "wt") {
+      printf(script);
+    }
+    script = "SCRIPT " + cfgget("EAGLE:Project.Dir") + "/" + fileName;
+
   }
 
   exit(script);

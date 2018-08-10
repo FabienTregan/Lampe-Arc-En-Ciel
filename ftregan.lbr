@@ -329,7 +329,7 @@
 </polygon>
 </package>
 <package name="37MIL_HOLE">
-<pad name="1" x="0" y="0" drill="0.6" diameter="0.9398"/>
+<pad name="1" x="0" y="0" drill="0.9398"/>
 </package>
 </packages>
 <symbols>

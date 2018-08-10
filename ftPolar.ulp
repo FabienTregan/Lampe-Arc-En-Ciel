@@ -65,7 +65,7 @@ real ftpModulus(real x, real y) {
   return ftpModulusFrom(_ftpCenterX, _ftpCenterY, x, y);
 }
 
-string ftpStart(real centerX, real centerY, real x, real y) {
+string ftpStart(real centerX, real centerY) {
   string result = "";
   result += "GRID = _ftpGridBeforeEnd @; GRID MM; GRID FINEST;\n";
   result += "SET WIRE_BEND 2;\n";
@@ -77,24 +77,29 @@ string ftpStart(real centerX, real centerY, real x, real y) {
 
   _ftpCenterX = centerX;
   _ftpCenterY = centerY;
-  _ftpRadius = ftpRadius(x, y);
-  _ftpModulus = ftpModulus(x, y);
 
   return result;
 }
 
-string ftpStartFromContact(real centerX, real centerY, UL_CONTACT c) {
-  return ftpStart(centerX, centerY, u2mm(c.x), u2mm(c.y));
+string ftpEnd() {
+  return "\nGRID _ftpGridBeforeEnd; GRID = _ftpGridBeforeEnd;";
+}
+
+string ftpJump(real x, real y) {
+  _ftpRadius = ftpRadius(x, y);
+  _ftpModulus = ftpModulus(x, y);
+
+  return "";
+}
+
+string ftpJumpToContact(UL_CONTACT c) {
+  return ftpJump(u2mm(c.x), u2mm(c.y));
 }
 
 string ftpVia() {
   string result;
   sprintf(result, "VIA (P %f %f);\n", _ftpRadius, _ftpModulus);
   return result;
-}
-
-string ftpEnd() {
-  return "\nGRID _ftpGridBeforeEnd; GRID = _ftpGridBeforeEnd;";
 }
 
 string ftpRadialMoveTo(real radius) {
