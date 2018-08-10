@@ -266,13 +266,13 @@ string place(void) {
 
  result += ftpComment("Connections between segments");
 
- sprintf(line, "MOVE 'BOARD_DI' (P %f 179);\n", BOARD_DATA_IN_AND_OUT_RADIUS);
+ sprintf(line, "MOVE 'BOARD_DI' (P %f 178);\n", BOARD_DATA_IN_AND_OUT_RADIUS);
  result += line;
- sprintf(line, "MOVE 'BOARD_CI' (P %f 179);\n", BOARD_CLOCK_IN_AND_OUT_RADIUS);
+ sprintf(line, "MOVE 'BOARD_CI' (P %f 178);\n", BOARD_CLOCK_IN_AND_OUT_RADIUS);
  result += line;
- sprintf(line, "MOVE 'BOARD_DO' (P %f 91);\n", BOARD_DATA_IN_AND_OUT_RADIUS);
+ sprintf(line, "MOVE 'BOARD_DO' (P %f 92);\n", BOARD_DATA_IN_AND_OUT_RADIUS);
  result += line;
- sprintf(line, "MOVE 'BOARD_CO' (P %f 91);\n", BOARD_CLOCK_IN_AND_OUT_RADIUS);
+ sprintf(line, "MOVE 'BOARD_CO' (P %f 92);\n", BOARD_CLOCK_IN_AND_OUT_RADIUS);
  result += line;
  
  result += 

@@ -360,13 +360,13 @@
 <text x="5.08" y="-2.54" size="1.27" layer="21" align="top-center">I</text>
 </package>
 <package name="12MM_ROUND">
-<circle x="0" y="0" radius="6" width="0.5" layer="21"/>
+<circle x="0" y="0" radius="6" width="0.25" layer="21"/>
 <smd name="1" x="0" y="0" dx="7" dy="7" layer="1" stop="no" thermals="no" cream="no"/>
-<polygon width="0.5" layer="1">
-<vertex x="-6" y="0" curve="-90"/>
-<vertex x="0" y="6" curve="-90"/>
-<vertex x="6" y="0" curve="-90"/>
-<vertex x="0" y="-6" curve="-90"/>
+<polygon width="1" layer="1">
+<vertex x="-5.5" y="0" curve="-90"/>
+<vertex x="0" y="5.5" curve="-90"/>
+<vertex x="5.5" y="0" curve="-90"/>
+<vertex x="0" y="-5.5" curve="-90"/>
 </polygon>
 </package>
 <package name="37MIL_HOLE">
@@ -645,10 +645,10 @@ design rules under a new name.</description>
 <element name="TOUCH_3" library="ftregan" package="12MM_ROUND" value="CAP_TOUCH_12MM_ROUND" x="26.276315625" y="51.621878125" rot="MR0"/>
 <element name="TOUCH_2" library="ftregan" package="12MM_ROUND" value="CAP_TOUCH_12MM_ROUND" x="18.4323" y="38.03564375" rot="MR0"/>
 <element name="TOUCH_1" library="ftregan" package="12MM_ROUND" value="CAP_TOUCH_12MM_ROUND" x="13.066675" y="23.2937125" rot="MR0"/>
-<element name="BOARD_DO" library="ftregan" package="37MIL_HOLE" value="DO" x="98.625971875" y="78.718009375" rot="SR282"/>
-<element name="BOARD_CO" library="ftregan" package="37MIL_HOLE" value="CO" x="98.58164375" y="81.257621875" rot="R260"/>
-<element name="BOARD_CI" library="ftregan" package="37MIL_HOLE" value="CI" x="18.742378125" y="1.41835625" rot="R191"/>
-<element name="BOARD_DI" library="ftregan" package="37MIL_HOLE" value="DI" x="21.281990625" y="1.374028125" rot="R169"/>
+<element name="BOARD_DO" library="ftregan" package="37MIL_HOLE" value="DO" x="97.2523625" y="78.682040625" rot="SR282"/>
+<element name="BOARD_CO" library="ftregan" package="37MIL_HOLE" value="CO" x="97.16371875" y="81.22049375" rot="R260"/>
+<element name="BOARD_CI" library="ftregan" package="37MIL_HOLE" value="CI" x="18.77950625" y="2.83628125" rot="R191"/>
+<element name="BOARD_DI" library="ftregan" package="37MIL_HOLE" value="DI" x="21.317959375" y="2.7476375" rot="R169"/>
 </elements>
 <signals>
 <signal name="N$1">
@@ -729,7 +729,7 @@ design rules under a new name.</description>
 <via x="24.998290625" y="11.879103125" extent="1-16" drill="0.3048" diameter="0.5" alwaysstop="yes"/>
 <wire x1="24.998290625" y1="11.879103125" x2="59.637728125" y2="64.321509375" width="0.5" layer="16" curve="-48.891394"/>
 <wire x1="24.998290625" y1="11.879103125" x2="22.239296875" y2="12.316084375" width="0.5" layer="1"/>
-<wire x1="22.239296875" y1="12.316084375" x2="21.281990625" y2="1.374028125" width="0.5" layer="1" curve="7.999999"/>
+<wire x1="22.239296875" y1="12.316084375" x2="21.317959375" y2="2.7476375" width="0.5" layer="1" curve="6.999999"/>
 </signal>
 <signal name="N$54">
 <contactref element="LED1" pad="2"/>
@@ -742,7 +742,7 @@ design rules under a new name.</description>
 <wire x1="26.6485625" y1="13.92620625" x2="60.97303125" y2="63.649575" width="0.5" layer="16" curve="-47.735303"/>
 <wire x1="60.97303125" y1="63.649575" x2="60.319634375" y2="64.715209375" width="0.5" layer="16"/>
 <wire x1="26.6485625" y1="13.92620625" x2="20.15625625" y2="15.158809375" width="0.5" layer="1"/>
-<wire x1="20.15625625" y1="15.158809375" x2="18.742378125" y2="1.41835625" width="0.5" layer="1" curve="9.750001"/>
+<wire x1="20.15625625" y1="15.158809375" x2="18.77950625" y2="2.83628125" width="0.5" layer="1" curve="8.750001"/>
 </signal>
 <signal name="GND">
 <contactref element="U$1" pad="5"/>
@@ -1030,7 +1030,7 @@ design rules under a new name.</description>
 <wire x1="73.29730625" y1="93.473878125" x2="72.998771875" y2="94.51890625" width="0.5" layer="1"/>
 <wire x1="72.998771875" y1="94.51890625" x2="87.169275" y2="97.45903125" width="0.5" layer="1" curve="-8.443057"/>
 <wire x1="87.169275" y1="97.45903125" x2="89.723671875" y2="78.056453125" width="0.5" layer="1"/>
-<wire x1="89.723671875" y1="78.056453125" x2="98.625971875" y2="78.718009375" width="0.5" layer="1" curve="-6.500001"/>
+<wire x1="89.723671875" y1="78.056453125" x2="97.2523625" y2="78.682040625" width="0.5" layer="1" curve="-5.500001"/>
 </signal>
 <signal name="N$27">
 <contactref element="LED12" pad="5"/>
@@ -1040,7 +1040,7 @@ design rules under a new name.</description>
 <wire x1="72.27551875" y1="92.1183625" x2="71.439746875" y2="94.895321875" width="0.5" layer="1"/>
 <wire x1="71.439746875" y1="94.895321875" x2="88.7815625" y2="98.462971875" width="0.5" layer="1" curve="-10.250002"/>
 <wire x1="88.7815625" y1="98.462971875" x2="90.799975" y2="80.747584375" width="0.5" layer="1"/>
-<wire x1="90.799975" y1="80.747584375" x2="98.58164375" y2="81.257621875" width="0.5" layer="1" curve="-5.5"/>
+<wire x1="90.799975" y1="80.747584375" x2="97.16371875" y2="81.22049375" width="0.5" layer="1" curve="-4.5"/>
 </signal>
 </signals>
 </board>

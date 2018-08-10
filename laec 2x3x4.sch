@@ -321,13 +321,13 @@
 <text x="5.08" y="-2.54" size="1.27" layer="21" align="top-center">I</text>
 </package>
 <package name="12MM_ROUND">
-<circle x="0" y="0" radius="6" width="0.5" layer="21"/>
+<circle x="0" y="0" radius="6" width="0.25" layer="21"/>
 <smd name="1" x="0" y="0" dx="7" dy="7" layer="1" stop="no" thermals="no" cream="no"/>
-<polygon width="0.5" layer="1">
-<vertex x="-6" y="0" curve="-90"/>
-<vertex x="0" y="6" curve="-90"/>
-<vertex x="6" y="0" curve="-90"/>
-<vertex x="0" y="-6" curve="-90"/>
+<polygon width="1" layer="1">
+<vertex x="-5.5" y="0" curve="-90"/>
+<vertex x="0" y="5.5" curve="-90"/>
+<vertex x="5.5" y="0" curve="-90"/>
+<vertex x="0" y="-5.5" curve="-90"/>
 </polygon>
 </package>
 <package name="37MIL_HOLE">
