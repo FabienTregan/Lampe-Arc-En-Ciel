@@ -10,10 +10,15 @@ UL_ELEMENT findElement(string name) {
       }
     }
   }
+
+  string error;
+  sprintf(error, "Element named '%s' not found.", name);
+  dlgMessageBox(error);
+
   return noElement;
 }
 
-UL_CONTACT findContact(UL_ELEMENT element, string name) {
+UL_CONTACT findContactFrom(UL_ELEMENT element, string name) {
 
   element.package.contacts(c) {
     if(c.name == name) {
@@ -21,5 +26,23 @@ UL_CONTACT findContact(UL_ELEMENT element, string name) {
     }
   }
 
+  string error;
+  sprintf(error, "Contact named '%s' not found in element '%s'.", name, element.name);
+  dlgMessageBox(error);
+
   return noContact;
 }
+
+UL_CONTACT findContact(string elementName, string contactName) {
+
+  UL_ELEMENT e = findElement(elementName);
+  UL_CONTACT c = findContactFrom(e, contactName);
+
+  return c;
+}
+
+
+
+
+
+

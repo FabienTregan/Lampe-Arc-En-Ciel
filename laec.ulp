@@ -97,10 +97,10 @@ string connectRows(void) {
       UL_ELEMENT eLedFrom = findLed(n);
       UL_ELEMENT eLedTo = findLed(n + 1);
 
-      UL_CONTACT cCO = findContact(eLedFrom, PIN_CO);
-      UL_CONTACT cDO = findContact(eLedFrom, PIN_DO);
-      UL_CONTACT cCI = findContact(eLedTo,   PIN_CI);
-      UL_CONTACT cDI = findContact(eLedTo,   PIN_DI);
+      UL_CONTACT cCO = findContactFrom(eLedFrom, PIN_CO);
+      UL_CONTACT cDO = findContactFrom(eLedFrom, PIN_DO);
+      UL_CONTACT cCI = findContactFrom(eLedTo,   PIN_CI);
+      UL_CONTACT cDI = findContactFrom(eLedTo,   PIN_DI);
 
       result += wirePads(cCO, cCI);
       result += wirePads(cDO, cDI);
@@ -118,7 +118,7 @@ string connectSegments(void) {
 
     UL_ELEMENT ledFrom = findLed(n);
 
-    UL_CONTACT cDO = findContact(ledFrom, PIN_DO);
+    UL_CONTACT cDO = findContactFrom(ledFrom, PIN_DO);
 
     result +=
       ftpJumpToContact(cDO)
@@ -129,13 +129,13 @@ string connectSegments(void) {
 
     if(segment < NB_SEGMENTS - 1) {
       UL_ELEMENT ledTo = findLed(n + 1);
-      UL_CONTACT cDI= findContact(ledTo, PIN_DI);
+      UL_CONTACT cDI= findContactFrom(ledTo, PIN_DI);
       result +=
         ftpRadialMoveToContact(cDI)
         + ftpAngularMoveToContact(cDI);
     }
 
-    UL_CONTACT cCO = findContact(ledFrom, PIN_CO);
+    UL_CONTACT cCO = findContactFrom(ledFrom, PIN_CO);
 
     result +=
       ftpJumpToContact(cCO)
@@ -148,7 +148,7 @@ string connectSegments(void) {
 
     if(segment < NB_SEGMENTS - 1) {
       UL_ELEMENT ledTo = findLed(n + 1);
-      UL_CONTACT cCI = findContact(ledTo, PIN_CI);
+      UL_CONTACT cCI = findContactFrom(ledTo, PIN_CI);
       result +=
         ftpRadialMoveTo(INNER_RADIUS + ROW_WIDTH * 0.5 - 1.1)
         + ftpAngularMoveToContact(cCI)
@@ -170,10 +170,10 @@ string connectCaps(void) {
       UL_ELEMENT eLed = findLed(n);
       UL_ELEMENT eCap = findCap(n);
 
-      UL_CONTACT cGND  = findContact(eLed, PIN_GND);
-      UL_CONTACT cVCC  = findContact(eLed, PIN_VCC);
-      UL_CONTACT cCap1 = findContact(eCap, "1");
-      UL_CONTACT cCap2 = findContact(eCap, "2");
+      UL_CONTACT cGND  = findContactFrom(eLed, PIN_GND);
+      UL_CONTACT cVCC  = findContactFrom(eLed, PIN_VCC);
+      UL_CONTACT cCap1 = findContactFrom(eCap, "1");
+      UL_CONTACT cCap2 = findContactFrom(eCap, "2");
 
       result +=
         ftpJumpToContact(cVCC)
@@ -191,7 +191,7 @@ string connectCaps(void) {
       UL_ELEMENT eCap = findCap(n);
 
       real vccAngle = SEGMENT_ANGLE * (segment + 3.0/4 ) - 1;
-      UL_CONTACT cCapVcc = findContact(eCap, "1");
+      UL_CONTACT cCapVcc = findContactFrom(eCap, "1");
 
       result +=
         ftpJumpToContact(cCapVcc)
@@ -260,8 +260,8 @@ string connectMcu(void) {
 
 // DO and CO to DI and CI of Led1
 
-  UL_CONTACT cDI = findContact(led1, PIN_DI);
-  UL_CONTACT cDO = findContact(mcu, PIN_MCU_DO);
+  UL_CONTACT cDI = findContactFrom(led1, PIN_DI);
+  UL_CONTACT cDO = findContactFrom(mcu, PIN_MCU_DO);
 
   result +=
     ftpJumpToContact( cDI)
@@ -272,8 +272,8 @@ string connectMcu(void) {
     + ftpAngularMoveToContact(cDO)
     + ftpLayer(LAYER_TOP);
 
-  UL_CONTACT cCI = findContact(led1, PIN_CI);
-  UL_CONTACT cCO = findContact(mcu, PIN_MCU_CO);
+  UL_CONTACT cCI = findContactFrom(led1, PIN_CI);
+  UL_CONTACT cCO = findContactFrom(mcu, PIN_MCU_CO);
 
   result +=
     ftpJumpToContact(cCI)
@@ -286,9 +286,9 @@ string connectMcu(void) {
     + ftpRadialMoveToContact(cCO)
     + ftpLayer(LAYER_TOP);
 
-  UL_CONTACT cVccTop = findContact(mcu, "4");
+  UL_CONTACT cVccTop = findContactFrom(mcu, "4");
   UL_ELEMENT cap14= findCap(14);
-  UL_CONTACT cC14p1 = findContact(cap14, "1");
+  UL_CONTACT cC14p1 = findContactFrom(cap14, "1");
 
 // Mcu to capacitors
 
@@ -298,8 +298,8 @@ string connectMcu(void) {
     + ftpAngularMoveToContact(cC14p1)
     + ftpRadialMoveToContact(cC14p1);
 
-  UL_CONTACT cGndTop = findContact(mcu, "5");
-  UL_CONTACT cC14p2 = findContact(cap14, "2");
+  UL_CONTACT cGndTop = findContactFrom(mcu, "5");
+  UL_CONTACT cC14p2 = findContactFrom(cap14, "2");
 
   result +=
     ftpJumpToContact(cGndTop)
@@ -307,9 +307,9 @@ string connectMcu(void) {
     + ftpAngularMoveToContact(cC14p2)
     + ftpRadialMoveToContact(cC14p2);
 
-  UL_CONTACT cVccBot = findContact(mcu, "18");
+  UL_CONTACT cVccBot = findContactFrom(mcu, "18");
   UL_ELEMENT cap13= findCap(13);
-  UL_CONTACT cC13p2 = findContact(cap13, "2");
+  UL_CONTACT cC13p2 = findContactFrom(cap13, "2");
 
   result +=
     ftpJumpToContact(cVccBot)
@@ -317,8 +317,8 @@ string connectMcu(void) {
     + ftpAngularMoveToContact(cC13p2)
     + ftpRadialMoveToContact(cC13p2);
 
-  UL_CONTACT cGndBot = findContact(mcu, "21");
-  UL_CONTACT cC13p1 = findContact(cap13, "1");
+  UL_CONTACT cGndBot = findContactFrom(mcu, "21");
+  UL_CONTACT cC13p1 = findContactFrom(cap13, "1");
 
   result +=
     ftpJumpToContact(cGndBot)
@@ -343,8 +343,8 @@ string connectMcu(void) {
 // ISP to MCU
 
   UL_ELEMENT eIsp= findElement(ispName);
-  UL_CONTACT cIspReset = findContact(eIsp, "5");
-  UL_CONTACT cMcuReset = findContact(mcu, "29");
+  UL_CONTACT cIspReset = findContactFrom(eIsp, "5");
+  UL_CONTACT cMcuReset = findContactFrom(mcu, "29");
 
   result +=
     ftpJumpToContact(cIspReset)
@@ -357,8 +357,8 @@ string connectMcu(void) {
     + ftpMoveToContact(cMcuReset)
     + "SET snap_length 20mil;";
 
-  UL_CONTACT cIspSck = findContact(eIsp, "7");
-  UL_CONTACT cMcuSck = findContact(mcu, "17");
+  UL_CONTACT cIspSck = findContactFrom(eIsp, "7");
+  UL_CONTACT cMcuSck = findContactFrom(mcu, "17");
 
   result +=
     ftpJumpToContact( cIspSck)
@@ -366,8 +366,8 @@ string connectMcu(void) {
     + ftpRadialMoveToContact(cMcuSck)
     + ftpAngularMoveToContact(cMcuSck);
 
-  UL_CONTACT cIspMiso = findContact(eIsp, "9");
-  UL_CONTACT cMcuMiso = findContact(mcu, "16");
+  UL_CONTACT cIspMiso = findContactFrom(eIsp, "9");
+  UL_CONTACT cMcuMiso = findContactFrom(mcu, "16");
 
   result +=
     ftpJumpToContact(cIspMiso)
@@ -375,8 +375,8 @@ string connectMcu(void) {
     + ftpRadialMoveToContact(cMcuMiso)
     + ftpAngularMoveToContact(cMcuMiso);
 
-  UL_CONTACT cIspMosi = findContact(eIsp, "1");
-  UL_CONTACT cMcuMosi = findContact(mcu, "15");
+  UL_CONTACT cIspMosi = findContactFrom(eIsp, "1");
+  UL_CONTACT cMcuMosi = findContactFrom(mcu, "15");
 
   result +=
     ftpLayer(LAYER_TOP)
@@ -402,11 +402,11 @@ string connectTouches(void) {
   for(int n = 0; n < NB_TOUCHES; n++) {
 
     UL_ELEMENT touch = findElement(touchName(n + 1));
-    UL_CONTACT cTouch = findContact(touch, "1");
+    UL_CONTACT cTouch = findContactFrom(touch, "1");
 
     string mcuPinName;
     sprintf(mcuPinName, "%d", 25 + n);
-    UL_CONTACT cMcuPin = findContact(mcu, mcuPinName);
+    UL_CONTACT cMcuPin = findContactFrom(mcu, mcuPinName);
 
     result +=
       ftpJumpToContact(cMcuPin)
@@ -448,6 +448,7 @@ void main() {
     } else if (argv[1] == CMD_TOUCHES) {
       script += connectTouches();
     } else if (argv[1] == CMD_TEST) {
+        
     }
 
     script += ftpEnd();
