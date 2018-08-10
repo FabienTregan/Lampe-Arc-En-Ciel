@@ -299,16 +299,16 @@
 <wire x1="-2.2" y1="2.5" x2="-1.5" y2="2.5" width="0.127" layer="21"/>
 </package>
 <package name="AVR_ISP_2X5">
-<pad name="1" x="-5.08" y="-1.27" drill="0.9398" diameter="1.524" shape="square"/>
-<pad name="2" x="-5.08" y="1.27" drill="0.9398" diameter="1.524"/>
-<pad name="3" x="-2.54" y="-1.27" drill="0.9398" diameter="1.524"/>
-<pad name="4" x="-2.54" y="1.27" drill="0.9398" diameter="1.524"/>
-<pad name="5" x="0" y="-1.27" drill="0.9398" diameter="1.524"/>
-<pad name="6" x="0" y="1.27" drill="0.9398" diameter="1.524"/>
-<pad name="7" x="2.54" y="-1.27" drill="0.9398" diameter="1.524"/>
-<pad name="8" x="2.54" y="1.27" drill="0.9398" diameter="1.524"/>
-<pad name="9" x="5.08" y="-1.27" drill="0.9398" diameter="1.524"/>
-<pad name="10" x="5.08" y="1.27" drill="0.9398" diameter="1.524"/>
+<pad name="1" x="-5.08" y="-1.27" drill="0.9398" shape="square"/>
+<pad name="2" x="-5.08" y="1.27" drill="0.9398"/>
+<pad name="3" x="-2.54" y="-1.27" drill="0.9398"/>
+<pad name="4" x="-2.54" y="1.27" drill="0.9398"/>
+<pad name="5" x="0" y="-1.27" drill="0.9398"/>
+<pad name="6" x="0" y="1.27" drill="0.9398"/>
+<pad name="7" x="2.54" y="-1.27" drill="0.9398"/>
+<pad name="8" x="2.54" y="1.27" drill="0.9398"/>
+<pad name="9" x="5.08" y="-1.27" drill="0.9398"/>
+<pad name="10" x="5.08" y="1.27" drill="0.9398"/>
 <text x="-5.08" y="-2.54" size="1.27" layer="21" align="top-center">O</text>
 <text x="-5.08" y="2.54" size="1.27" layer="21" align="bottom-center">V</text>
 <text x="-2.54" y="2.54" size="1.27" layer="21" align="bottom-center">T.</text>
@@ -332,6 +332,7 @@
 </package>
 <package name="37MIL_HOLE">
 <pad name="1" x="0" y="0" drill="0.9398"/>
+<text x="0" y="-1.27" size="1.27" layer="21" align="top-center">&gt;VALUE</text>
 </package>
 </packages>
 <symbols>
@@ -1308,10 +1309,10 @@ Source: AVX .. aphvc.pdf</description>
 <part name="TOUCH_3" library="ftregan" deviceset="CAP_TOUCH_12MM_ROUND" device=""/>
 <part name="TOUCH_2" library="ftregan" deviceset="CAP_TOUCH_12MM_ROUND" device=""/>
 <part name="TOUCH_1" library="ftregan" deviceset="CAP_TOUCH_12MM_ROUND" device=""/>
-<part name="SEG_DO" library="ftregan" deviceset="37MIL_HOLE" device=""/>
-<part name="SEG_CO" library="ftregan" deviceset="37MIL_HOLE" device=""/>
-<part name="SEG_CI" library="ftregan" deviceset="37MIL_HOLE" device=""/>
-<part name="SEG_DI" library="ftregan" deviceset="37MIL_HOLE" device=""/>
+<part name="BOARD_DO" library="ftregan" deviceset="37MIL_HOLE" device="" value="DO"/>
+<part name="BOARD_CO" library="ftregan" deviceset="37MIL_HOLE" device="" value="CO"/>
+<part name="BOARD_CI" library="ftregan" deviceset="37MIL_HOLE" device="" value="CI"/>
+<part name="BOARD_DI" library="ftregan" deviceset="37MIL_HOLE" device="" value="DI"/>
 </parts>
 <sheets>
 <sheet>
@@ -1361,10 +1362,10 @@ Source: AVX .. aphvc.pdf</description>
 <instance part="TOUCH_3" gate="G$1" x="53.34" y="106.68" rot="R180"/>
 <instance part="TOUCH_2" gate="G$1" x="58.42" y="106.68" rot="R180"/>
 <instance part="TOUCH_1" gate="G$1" x="63.5" y="106.68" rot="R180"/>
-<instance part="SEG_DO" gate="G$1" x="355.6" y="-76.2" rot="R90"/>
-<instance part="SEG_CO" gate="G$1" x="355.6" y="-81.28" rot="R90"/>
-<instance part="SEG_CI" gate="G$1" x="116.84" y="71.12" rot="R180"/>
-<instance part="SEG_DI" gate="G$1" x="121.92" y="71.12" rot="R180"/>
+<instance part="BOARD_DO" gate="G$1" x="355.6" y="-76.2" rot="R90"/>
+<instance part="BOARD_CO" gate="G$1" x="355.6" y="-81.28" rot="R90"/>
+<instance part="BOARD_CI" gate="G$1" x="116.84" y="71.12" rot="R180"/>
+<instance part="BOARD_DI" gate="G$1" x="121.92" y="71.12" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -1517,7 +1518,7 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="83.82" y1="60.96" x2="121.92" y2="60.96" width="0.1524" layer="91"/>
 <junction x="121.92" y="60.96"/>
 <wire x1="121.92" y1="60.96" x2="152.4" y2="60.96" width="0.1524" layer="91"/>
-<pinref part="SEG_DI" gate="G$1" pin="P$1"/>
+<pinref part="BOARD_DI" gate="G$1" pin="P$1"/>
 <wire x1="121.92" y1="60.96" x2="121.92" y2="66.04" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -1528,7 +1529,7 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="152.4" y1="55.88" x2="116.84" y2="55.88" width="0.1524" layer="91"/>
 <junction x="116.84" y="55.88"/>
 <wire x1="116.84" y1="55.88" x2="83.82" y2="55.88" width="0.1524" layer="91"/>
-<pinref part="SEG_CI" gate="G$1" pin="P$1"/>
+<pinref part="BOARD_CI" gate="G$1" pin="P$1"/>
 <wire x1="116.84" y1="66.04" x2="116.84" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -1972,14 +1973,14 @@ Source: AVX .. aphvc.pdf</description>
 <segment>
 <pinref part="LED12" gate="G$1" pin="DO"/>
 <wire x1="340.36" y1="-76.2" x2="350.52" y2="-76.2" width="0.1524" layer="91"/>
-<pinref part="SEG_DO" gate="G$1" pin="P$1"/>
+<pinref part="BOARD_DO" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 <net name="N$27" class="0">
 <segment>
 <pinref part="LED12" gate="G$1" pin="CO"/>
 <wire x1="350.52" y1="-81.28" x2="340.36" y2="-81.28" width="0.1524" layer="91"/>
-<pinref part="SEG_CO" gate="G$1" pin="P$1"/>
+<pinref part="BOARD_CO" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 </nets>

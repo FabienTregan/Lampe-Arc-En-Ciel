@@ -9,26 +9,29 @@ string CMD_MCU = "mcu";
 string CMD_TOUCHES = "touches";
 string CMD_TEST = "test";
  
-string PIN_DI  = "1";
-string PIN_CI  = "2";
+string PIN_DI = "1";
+string PIN_CI = "2";
 string PIN_GND = "3";
 string PIN_VCC = "4";
-string PIN_CO  = "5";
-string PIN_DO  = "6";
+string PIN_CO = "5";
+string PIN_DO = "6";
 string PIN_MCU_CO = "23";
 string PIN_MCU_DO = "24";
 string PIN_ISP_RESET = "5";
 
 int NB_SEGMENTS = 3;
 int NB_ROWS = 4;
-int ROW_WIDTH = 10;                           // Width of each row in mm
-real ARC_ANGLE = 90;                          // 90 for half a rainbow, 180 for normal rainbow
+int ROW_WIDTH = 10;              // Width of each row in mm
+real ARC_ANGLE = 90;             // 90 for half a rainbow, 180 for normal rainbow
 real SEGMENT_ANGLE = ARC_ANGLE / NB_SEGMENTS;
-real OUTER_RADIUS = 100;                      // Outer diameter of the pcb
-real CAP_MARGIN = 5;                          // Distance between cap and led in mm
-real WIDTH = 0.5;                             // Wires width
+real OUTER_RADIUS = 100;         // Outer diameter of the pcb
+real CAP_MARGIN = 5;             // Distance between cap and led in mm
+real WIDTH = 0.5;                // Wires width
 real INNER_RADIUS = OUTER_RADIUS - ROW_WIDTH * NB_ROWS;
 real MIDDLE_RADIUS = ( INNER_RADIUS + OUTER_RADIUS ) / 2;
+
+real BOARD_CLOCK_IN_AND_OUT_RADIUS = MIDDLE_RADIUS + 1.27;
+real BOARD_DATA_IN_AND_OUT_RADIUS = MIDDLE_RADIUS - 1.27;
 
 string mcuName = "U$1";
 int MCU_SEGMENT = 1;
@@ -40,112 +43,115 @@ real ispModulus = mcuModulus - 8.5;
 int NB_TOUCHES = 4;
 
 void showReal(string description, real x) {
-  string s;
-  sprintf(s, "%s: %f.", description, x);
-  dlgMessageBox(s);
+ string s;
+ sprintf(s, "%s: %f.", description, x);
+ dlgMessageBox(s);
 }
 
 real angleToCenter(real x, real y) {
-  return atan((y - 0) / (x - OUTER_RADIUS)) * 180 / PI;
+ return atan((y - 0) / (x - OUTER_RADIUS)) * 180 / PI;
 }
 
 string ledName(int n) {
-  string result;
-  sprintf(result, "LED%d", n);
-  return result;
+ string result;
+ sprintf(result, "LED%d", n);
+ return result;
 }
 
 string capName(int n) {
-  string result;
-  sprintf(result, "C%d", n);
-  return result;
+ string result;
+ sprintf(result, "C%d", n);
+ return result;
 }
 
 string touchName(int n) {
-  string result;
-  sprintf(result, "TOUCH_%d", n);
-  return result;
+ string result;
+ sprintf(result, "TOUCH_%d", n);
+ return result;
 }
 
 UL_ELEMENT findLed(int n) {
-  return findElement(ledName(n));
+ return findElement(ledName(n));
 }
 
 UL_ELEMENT findCap(int n) {
-  return findElement(capName(n));
+ return findElement(capName(n));
 }
 
 string wirePads(UL_CONTACT cFrom, UL_CONTACT cTo) {
-  string line;
-  sprintf(line, "ROUTE %f (%f %f) (%f %f);", WIDTH, u2mm(cFrom.x), u2mm(cFrom.y), u2mm(cTo.x), u2mm(cTo.y));
-  return line;
+ string line;
+ sprintf(line, "ROUTE %f (%f %f) (%f %f);", WIDTH, u2mm(cFrom.x), u2mm(cFrom.y), u2mm(cTo.x), u2mm(cTo.y));
+ return line;
 }
 
 string markCenter(void) {
-  string line;
-  sprintf(line, "MARK (%f 0);\n", OUTER_RADIUS);
-  return line;
+ string line;
+ sprintf(line, "MARK (%f 0);\n", OUTER_RADIUS);
+ return line;
 }
 
 string connectRows(void) {
-  string result = "SET OBSTACLE_MODE IGNORE; SET WIRE_BEND 2;\n";
-  for (int segment = 0; segment < NB_SEGMENTS; segment++){
-    for (int row = 0; row < NB_ROWS - 1; row++) {
+ string result = "SET OBSTACLE_MODE IGNORE; SET WIRE_BEND 2;\n";
+ for (int segment = 0; segment < NB_SEGMENTS; segment++){
+  for (int row = 0; row < NB_ROWS - 1; row++) {
 
-      int n = (1 + segment * NB_ROWS + row); 
+   int n = (1 + segment * NB_ROWS + row); 
 
-      UL_ELEMENT eLedFrom = findLed(n);
-      UL_ELEMENT eLedTo = findLed(n + 1);
+   UL_ELEMENT eLedFrom = findLed(n);
+   UL_ELEMENT eLedTo = findLed(n + 1);
 
-      UL_CONTACT cCO = findContactFrom(eLedFrom, PIN_CO);
-      UL_CONTACT cDO = findContactFrom(eLedFrom, PIN_DO);
-      UL_CONTACT cCI = findContactFrom(eLedTo,   PIN_CI);
-      UL_CONTACT cDI = findContactFrom(eLedTo,   PIN_DI);
+   UL_CONTACT cCO = findContactFrom(eLedFrom, PIN_CO);
+   UL_CONTACT cDO = findContactFrom(eLedFrom, PIN_DO);
+   UL_CONTACT cCI = findContactFrom(eLedTo,  PIN_CI);
+   UL_CONTACT cDI = findContactFrom(eLedTo,  PIN_DI);
 
-      result += wirePads(cCO, cCI);
-      result += wirePads(cDO, cDI);
+   result += wirePads(cCO, cCI);
+   result += wirePads(cDO, cDI);
 
-    }
   }
-  return result;
+ }
+ return result;
 }
 
 string connectSegments(void) {
-  string result = "CHANG WIDTH 0.5;";
+
+  UL_CONTACT cBoardCO = findContact("BOARD_CO", "1");
+  UL_CONTACT cBoardDO = findContact("BOARD_DO", "1");
+
+  string result = "CHANGE WIDTH 0.5;";
   for (int segment = 0; segment < NB_SEGMENTS; segment++){
 
     int n = (1 + segment) * NB_ROWS;
 
     UL_ELEMENT ledFrom = findLed(n);
-
     UL_CONTACT cDO = findContactFrom(ledFrom, PIN_DO);
 
     result +=
       ftpJumpToContact(cDO)
       + ftpRadialMoveTo(OUTER_RADIUS - 1.7)
       + ftpAngularMoveTo(180 - (SEGMENT_ANGLE * (segment + 3.0/4 ) - 0))
-
-      + ftpRadialMoveTo(79);
+      + ftpRadialMoveToContact(cBoardDO);
 
     if(segment < NB_SEGMENTS - 1) {
       UL_ELEMENT ledTo = findLed(n + 1);
       UL_CONTACT cDI= findContactFrom(ledTo, PIN_DI);
       result +=
-        ftpRadialMoveToContact(cDI)
-        + ftpAngularMoveToContact(cDI);
+       ftpRadialMoveToContact(cDI)
+       + ftpAngularMoveToContact(cDI);
+    } else {
+      result += ftpAngularMoveToContact(cBoardDO);
     }
 
     UL_CONTACT cCO = findContactFrom(ledFrom, PIN_CO);
-
+  
     result +=
       ftpJumpToContact(cCO)
       + ftpRadialMove(-1)
       + ftpAngularMove(1.75)
       + ftpRadialMoveTo(OUTER_RADIUS - 0.9)
       + ftpAngularMoveTo(180 - (SEGMENT_ANGLE * (segment + 3.0/4 ) + 1))
-
-      + ftpRadialMoveTo(81);
-
+      + ftpRadialMoveToContact(cBoardCO);
+  
     if(segment < NB_SEGMENTS - 1) {
       UL_ELEMENT ledTo = findLed(n + 1);
       UL_CONTACT cCI = findContactFrom(ledTo, PIN_CI);
@@ -153,102 +159,130 @@ string connectSegments(void) {
         ftpRadialMoveTo(INNER_RADIUS + ROW_WIDTH * 0.5 - 1.1)
         + ftpAngularMoveToContact(cCI)
         + ftpRadialMoveToContact(cCI);
+    } else {
+      result += ftpAngularMoveToContact(cBoardCO);
     }
-
+  
   } 
 
-  return result;
+ return result;
 }
 
 string connectCaps(void) {
-  string result = "";
+ string result = "";
 
-  for (int segment = 0; segment < NB_SEGMENTS; segment++){
-    for (int row = 0; row < NB_ROWS; row++) {
-      int n = (1 + segment * NB_ROWS + row);
+ for (int segment = 0; segment < NB_SEGMENTS; segment++){
+  for (int row = 0; row < NB_ROWS; row++) {
+   int n = (1 + segment * NB_ROWS + row);
 
-      UL_ELEMENT eLed = findLed(n);
-      UL_ELEMENT eCap = findCap(n);
+   UL_ELEMENT eLed = findLed(n);
+   UL_ELEMENT eCap = findCap(n);
 
-      UL_CONTACT cGND  = findContactFrom(eLed, PIN_GND);
-      UL_CONTACT cVCC  = findContactFrom(eLed, PIN_VCC);
-      UL_CONTACT cCap1 = findContactFrom(eCap, "1");
-      UL_CONTACT cCap2 = findContactFrom(eCap, "2");
+   UL_CONTACT cGND = findContactFrom(eLed, PIN_GND);
+   UL_CONTACT cVCC = findContactFrom(eLed, PIN_VCC);
+   UL_CONTACT cCap1 = findContactFrom(eCap, "1");
+   UL_CONTACT cCap2 = findContactFrom(eCap, "2");
 
-      result +=
-        ftpJumpToContact(cVCC)
-        + ftpAngularMoveToContact(cCap1)
-        + ftpRadialMoveToContact(cCap1);
-    }
+   result +=
+    ftpJumpToContact(cVCC)
+    + ftpAngularMoveToContact(cCap1)
+    + ftpRadialMoveToContact(cCap1);
   }
+ }
 
-  for (segment = 0; segment < NB_SEGMENTS; segment++){
-    for(int row = 0; row < NB_ROWS; row++) {
+ for (segment = 0; segment < NB_SEGMENTS; segment++){
+  for(int row = 0; row < NB_ROWS; row++) {
 
-      // start with the last led of each row so the big wire to +5V is there first.
-      int n = (segment + 1) * NB_ROWS - row;
+   // start with the last led of each row so the big wire to +5V is there first.
+   int n = (segment + 1) * NB_ROWS - row;
 
-      UL_ELEMENT eCap = findCap(n);
+   UL_ELEMENT eCap = findCap(n);
 
-      real vccAngle = SEGMENT_ANGLE * (segment + 3.0/4 ) - 1;
-      UL_CONTACT cCapVcc = findContactFrom(eCap, "1");
+   real vccAngle = SEGMENT_ANGLE * (segment + 3.0/4 ) - 1;
+   UL_CONTACT cCapVcc = findContactFrom(eCap, "1");
 
-      result +=
-        ftpJumpToContact(cCapVcc)
-        + ftpAngularMoveTo(180 - vccAngle + 0.0001); // Stupid +0.0001 to prevent eagle from puting a stupid airwire :-/
+   result +=
+    ftpJumpToContact(cCapVcc)
+    + ftpAngularMoveTo(180 - vccAngle + 0.0001); // Stupid +0.0001 to prevent eagle from puting a stupid airwire :-/
 
-      if(row == 0 ) {
-        result +=
-          ftpRadialMoveTo(INNER_RADIUS + 4)
-          + ftpVia();
-      }
-    }
+   if(row == 0 ) {
+    result +=
+     ftpRadialMoveTo(INNER_RADIUS + 4)
+     + ftpVia();
+   }
   }
+ }
 
-  return result;
+ return result;
 }
 
 string place(void) {
-  string result;
-  string line;
+ string result;
+ string line;
 
-  result = markCenter(); 
+ result += ftpComment("Leds and Caps");
 
-  for (int segment = 0; segment < NB_SEGMENTS; segment++){
-    for (int row = 0; row < NB_ROWS; row++) {
+ for (int segment = 0; segment < NB_SEGMENTS; segment++){
+  for (int row = 0; row < NB_ROWS; row++) {
 
-      int n = (1 + segment * NB_ROWS + row);      
-      real angle = SEGMENT_ANGLE * (segment + 0.5);
+   int n = (1 + segment * NB_ROWS + row);   
+   real angle = SEGMENT_ANGLE * (segment + 0.5);
 
-      real radius = OUTER_RADIUS - (NB_ROWS - 0.5 - row) * ROW_WIDTH;
-      string ledN = ledName(n);
-      sprintf(line, "MOVE %s (P %f %f); ROTATE =R%f %s;\n", ledN, radius, 180 - angle, 180 - angle, ledN);
-      result += line;
+   real radius = OUTER_RADIUS - (NB_ROWS - 0.5 - row) * ROW_WIDTH;
+   string ledN = ledName(n);
+   sprintf(line, "MOVE %s (P %f %f); ROTATE =R%f %s;\n", ledN, radius, 180 - angle, 180 - angle, ledN);
+   result += line;
 
-      string capN = capName(n);
-      angle = angle + 6 - radius / 30;
-      sprintf(line, "MOVE %s (P %f %f); ROTATE =R%f %s;\n", capN, radius, 180 - angle , - angle, capN);
-      result += line;
-    }
+   string capN = capName(n);
+   angle = angle + 6 - radius / 30;
+   sprintf(line, "MOVE %s (P %f %f); ROTATE =R%f %s;\n", capN, radius, 180 - angle , - angle, capN);
+   result += line;
   }
+ }
 
-  sprintf(line, "MOVE '%s' (AP %f %f); ROTATE =MR%f '%s';\n", mcuName, MIDDLE_RADIUS, mcuModulus, 0 - mcuModulus, mcuName);
-  result += line;
-  sprintf(line, "MOVE '%s' (AP %f %f); ROTATE =MR%f '%s';\n", ispName, MIDDLE_RADIUS, ispModulus, 180 - ispModulus, ispName);
-  result += line;
-  sprintf(line, "MOVE '%s' (AP %f %f); ROTATE =MR%f '%s';\n", "C13", MIDDLE_RADIUS - 7, mcuModulus, - (90 + mcuModulus ), "C13");
-  result += line;
-  sprintf(line, "MOVE '%s' (AP %f %f); ROTATE =MR%f '%s';\n", "C14", MIDDLE_RADIUS + 7, mcuModulus, - (90 + mcuModulus ), "C14");
-  result += line;
+ result += ftpComment("MCU");
 
-  for(int n = 0; n < NB_TOUCHES; n++) {
-    string touchN= touchName(n + 1);
-    real angle = 15 + 10 * n;
-    sprintf(line, "MOVE '%s' (P %f %f);\n", touchN, 90.0, 180 - angle);
-    result += line;
-  }
+ sprintf(line, "MOVE '%s' (AP %f %f); ROTATE =MR%f '%s';\n", mcuName, MIDDLE_RADIUS, mcuModulus, 0 - mcuModulus, mcuName);
+ result += line;
+ sprintf(line, "MOVE '%s' (AP %f %f); ROTATE =MR%f '%s';\n", "C13", MIDDLE_RADIUS - 7, mcuModulus, - (90 + mcuModulus ), "C13");
+ result += line;
+
+ result += ftpComment("ISP");
+
+ sprintf(line, "MOVE '%s' (AP %f %f); ROTATE =MR%f '%s';\n", ispName, MIDDLE_RADIUS, ispModulus, 180 - ispModulus, ispName);
+ result += line;
+ sprintf(line, "MOVE '%s' (AP %f %f); ROTATE =MR%f '%s';\n", "C14", MIDDLE_RADIUS + 7, mcuModulus, - (90 + mcuModulus ), "C14");
+ result += line;
+
+ result += ftpComment("Touches");
+
+ for(int n = 0; n < NB_TOUCHES; n++) {
+  string touchN= touchName(n + 1);
+  real angle = 15 + 10 * n;
+  sprintf(line, "MOVE '%s' (P %f %f);\n", touchN, 90.0, 180 - angle);
+  result += line;
+ }
+
+ result += ftpComment("Connections between segments");
+
+ sprintf(line, "MOVE 'BOARD_DI' (P %f 179);\n", BOARD_DATA_IN_AND_OUT_RADIUS);
+ result += line;
+ sprintf(line, "MOVE 'BOARD_CI' (P %f 179);\n", BOARD_CLOCK_IN_AND_OUT_RADIUS);
+ result += line;
+ sprintf(line, "MOVE 'BOARD_DO' (P %f 91);\n", BOARD_DATA_IN_AND_OUT_RADIUS);
+ result += line;
+ sprintf(line, "MOVE 'BOARD_CO' (P %f 91);\n", BOARD_CLOCK_IN_AND_OUT_RADIUS);
+ result += line;
  
-  return result;
+ result += 
+  "CHANGE DRILL 1.8; CHANGE DIAMETER 0.5;\n"
+  + "VIA 'GND' STOP (P 70 92.5) (P 75 92.5) (P 85 92.5) (P 90 92.5) (P 95 92.5);\n"
+  + "VIA 'GND' STOP (P 70 177.5) (P 75 177.5) (P 85 177.5) (P 90 177.5) (P 95 177.5);\n" 
+  + "VIA '+5V' STOP (P 65 92.5);\n"
+  + "VIA '+5V' STOP (P 65 177.5);\n"
+  + "CHANGE DRILL 12mil\n;"; 
+
+ return result;
 }
 
 string connectMcu(void) {
@@ -258,39 +292,64 @@ string connectMcu(void) {
   UL_ELEMENT mcu = findElement(mcuName);
   UL_ELEMENT led1 = findLed(1);
 
-// DO and CO to DI and CI of Led1
-
+  result += ftpComment("DO and CO to DI and CI of Led1");
+ 
   UL_CONTACT cDI = findContactFrom(led1, PIN_DI);
   UL_CONTACT cDO = findContactFrom(mcu, PIN_MCU_DO);
 
   result +=
-    ftpJumpToContact( cDI)
+    ftpJumpToContact(cDI)
     + ftpAngularMoveTo(171)
-    + ftpRadialMoveToContact(cDO)
-    + ftpVia()
+    + ftpRadialMoveToContact(cDO);
+
+  real radius = _ftpRadius;
+  real modulus = _ftpModulus;
+
+  result +=
+    ftpVia()
     + ftpLayer(LAYER_BOTTOM)
     + ftpAngularMoveToContact(cDO)
     + ftpLayer(LAYER_TOP);
+
+  UL_CONTACT cBoardDI = findContact("BOARD_DI", "1");
+  _ftpRadius = radius;
+  _ftpModulus = modulus;
+  result += "## to board DI\n"
+    + ftpRadialMoveToContact(cBoardDI)
+    + ftpAngularMoveToContact(cBoardDI);
+
 
   UL_CONTACT cCI = findContactFrom(led1, PIN_CI);
   UL_CONTACT cCO = findContactFrom(mcu, PIN_MCU_CO);
 
   result +=
-    ftpJumpToContact(cCI)
-    + ftpRadialMove(1.75)
-    + ftpAngularMoveTo(169.25)
-    + ftpRadialMoveTo(ftpRadius(u2mm(cCO.x), u2mm(cCO.y)) - 1.25 )
-    + ftpVia()
-    + ftpLayer(LAYER_BOTTOM)
-    + ftpAngularMoveToContact(cCO)
-    + ftpRadialMoveToContact(cCO)
-    + ftpLayer(LAYER_TOP);
+   ftpJumpToContact(cCI)
+   + ftpRadialMove(1.75)
+   + ftpAngularMoveTo(169.25)
+   + ftpRadialMoveTo(ftpRadius(u2mm(cCO.x), u2mm(cCO.y)) - 1.25 );
+
+  radius = _ftpRadius;
+  modulus = _ftpModulus;
+
+ result +=
+   ftpVia()
+   + ftpLayer(LAYER_BOTTOM)
+   + ftpAngularMoveToContact(cCO)
+   + ftpRadialMoveToContact(cCO)
+   + ftpLayer(LAYER_TOP);
+
+  UL_CONTACT cBoardCI = findContact("BOARD_CI", "1");
+  _ftpRadius = radius;
+  _ftpModulus = modulus;
+  result += "## to board CI\n"
+    + ftpRadialMoveToContact(cBoardCI)
+    + ftpAngularMoveToContact(cBoardCI);
+
+  result += ftpComment("Mcu to capacitors");
 
   UL_CONTACT cVccTop = findContactFrom(mcu, "4");
   UL_ELEMENT cap14= findCap(14);
-  UL_CONTACT cC14p1 = findContactFrom(cap14, "1");
-
-// Mcu to capacitors
+  UL_CONTACT cC14p1 = findContactFrom(cap14, "1"); 
 
   result +=
     ftpJumpToContact(cVccTop)
@@ -326,7 +385,7 @@ string connectMcu(void) {
     + ftpAngularMoveToContact(cC13p1)
     + ftpRadialMoveToContact(cC13p1);
 
-// Caps to +5V
+  result += ftpComment("Caps to +5V");
 
   result +=
     ftpJumpToContact(cC13p2)
@@ -340,7 +399,7 @@ string connectMcu(void) {
     + ftpRadialMoveTo(INNER_RADIUS + 5)
     + ftpVia();
 
-// ISP to MCU
+  result += ftpComment("ISP to MCU");
 
   UL_ELEMENT eIsp= findElement(ispName);
   UL_CONTACT cIspReset = findContactFrom(eIsp, "5");
@@ -370,7 +429,7 @@ string connectMcu(void) {
   UL_CONTACT cMcuMiso = findContactFrom(mcu, "16");
 
   result +=
-    ftpJumpToContact(cIspMiso)
+   ftpJumpToContact(cIspMiso)
     + ftpAngularMove(2.5)
     + ftpRadialMoveToContact(cMcuMiso)
     + ftpAngularMoveToContact(cMcuMiso);
@@ -397,22 +456,18 @@ string connectTouches(void) {
 
   string result;
 
-  UL_ELEMENT mcu = findElement(mcuName);
-
   for(int n = 0; n < NB_TOUCHES; n++) {
 
-    UL_ELEMENT touch = findElement(touchName(n + 1));
-    UL_CONTACT cTouch = findContactFrom(touch, "1");
+  UL_CONTACT cTouch = findContact(touchName(n + 1), "1");
 
-    string mcuPinName;
-    sprintf(mcuPinName, "%d", 25 + n);
-    UL_CONTACT cMcuPin = findContactFrom(mcu, mcuPinName);
+  string mcuPinName;
+  sprintf(mcuPinName, "%d", 25 + n);
+  UL_CONTACT cMcuPin = findContact(mcuName, mcuPinName);
 
-    result +=
-      ftpJumpToContact(cMcuPin)
-      + ftpAngularMoveToContact(cTouch)
-      + ftpRadialMoveToContact(cTouch);
-
+  result +=
+    ftpJumpToContact(cMcuPin)
+    + ftpAngularMoveToContact(cTouch)
+    + ftpRadialMoveToContact(cTouch);
   }
 
   return result;
@@ -421,19 +476,20 @@ string connectTouches(void) {
 void main() {
   string script = "";
 
-  // This hack allows to execute each script before executing the next one.
-  // This allows the parts to be positionned by previous script before the next one is executed.
+ // This hack allows to execute each script before executing the next one.
+ // This allows the parts to be positionned by previous script before the next one is executed.
   if(argc == 1) {
     script =
-      "run laec.ulp " + CMD_PLACE + ";\n"
-      + "run laec.ulp " + CMD_ROWS + ";\n"
-      + "run laec.ulp " + CMD_CAPS + ";\n"
-      + "run laec.ulp " + CMD_SEGMENTS + ";\n"
-      + "run laec.ulp " + CMD_TOUCHES + ";\n"
-      + "run laec.ulp " + CMD_MCU + ";\n";
+     "run laec.ulp " + CMD_PLACE + ";\n"
+     + "run laec.ulp " + CMD_ROWS + ";\n"
+     + "run laec.ulp " + CMD_CAPS + ";\n"
+     + "run laec.ulp " + CMD_SEGMENTS + ";\n"
+     + "run laec.ulp " + CMD_TOUCHES + ";\n"
+     + "run laec.ulp " + CMD_MCU + ";\n";
   } else {
 
-    script = ftpStart(OUTER_RADIUS, 0);
+    script = "CHANGE DRILL 12mil; CHANGE DIAMETER 0.5;\n;"
+      + ftpStart(OUTER_RADIUS, 0);
 
     if (argv[1] == CMD_PLACE) {
       script += place();
@@ -448,7 +504,7 @@ void main() {
     } else if (argv[1] == CMD_TOUCHES) {
       script += connectTouches();
     } else if (argv[1] == CMD_TEST) {
-        
+   
     }
 
     script += ftpEnd();

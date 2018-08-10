@@ -65,6 +65,10 @@ real ftpModulus(real x, real y) {
   return ftpModulusFrom(_ftpCenterX, _ftpCenterY, x, y);
 }
 
+string ftpComment(string comment) {
+  return ("\n## --------" + comment + " --------\n");
+}
+
 string ftpStart(real centerX, real centerY) {
   string result = "";
   result += "GRID = _ftpGridBeforeEnd @; GRID MM; GRID FINEST;\n";
@@ -98,7 +102,7 @@ string ftpJumpToContact(UL_CONTACT c) {
 
 string ftpVia() {
   string result;
-  sprintf(result, "VIA (P %f %f);\n", _ftpRadius, _ftpModulus);
+  sprintf(result, "VIA STOP (P %f %f);\n", _ftpRadius, _ftpModulus);
   return result;
 }
 
