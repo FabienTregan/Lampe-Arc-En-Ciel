@@ -193,7 +193,7 @@ string connectCaps(void) {
  for (segment = 0; segment < NB_SEGMENTS; segment++){
   for(int row = 0; row < NB_ROWS; row++) {
 
-   // start with the last led of each row so the big wire to +5V is there first.
+   // start with the last led of each row so the long wire to +5V is there first.
    int n = (segment + 1) * NB_ROWS - row;
 
    UL_ELEMENT eCap = findCap(n);
@@ -206,8 +206,9 @@ string connectCaps(void) {
     + ftpAngularMoveTo(180 - vccAngle + 0.0001); // Stupid +0.0001 to prevent eagle from puting a stupid airwire :-/
 
    if(row == 0 ) {
+    UL_CONTACT cLed1Contact1 = findContact("LED1", "1");
     result +=
-     ftpRadialMoveTo(INNER_RADIUS + 4)
+     ftpRadialMoveToContact(cLed1Contact1)
      + ftpVia();
    }
   }
