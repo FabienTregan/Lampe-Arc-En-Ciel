@@ -103,8 +103,10 @@
 <circle x="61.109128125" y="38.890871875" radius="4" width="0.001" layer="51"/>
 <circle x="59.818240625" y="97.00735" radius="4" width="0.001" layer="51"/>
 <circle x="2.99265" y="40.181759375" radius="4" width="0.001" layer="51"/>
-<text x="35.24734375" y="5.665121875" size="1.778" layer="25" align="center">+</text>
-<text x="94.334878125" y="64.75265625" size="1.778" layer="25" align="center">+</text>
+<text x="35.24734375" y="5.665121875" size="1.778" layer="25" rot="SR355" align="center">+5V</text>
+<text x="94.334878125" y="64.75265625" size="1.778" layer="25" rot="SR95" align="center">+5V</text>
+<text x="5.361503125" y="8.279796875" size="1.778" layer="25" rot="SR355" align="center">GND</text>
+<text x="91.720203125" y="94.638496875" size="1.778" layer="25" rot="SR95" align="center">GND</text>
 </plain>
 <libraries>
 <library name="eagle-ltspice" urn="urn:adsk.eagle:library:217">
