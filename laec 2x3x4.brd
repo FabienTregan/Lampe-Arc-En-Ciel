@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.003125" unitdist="mic" unit="mm" style="dots" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
+<grid distance="0.003125" unitdist="mic" unit="mm" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -75,13 +75,36 @@
 </layers>
 <board>
 <plain>
-<wire x1="40" y1="0" x2="100" y2="60" width="0" layer="20" curve="-90"/>
-<wire x1="0" y1="0" x2="100" y2="100" width="0" layer="20" curve="-90"/>
-<wire x1="100" y1="100" x2="100" y2="60" width="0" layer="20"/>
-<wire x1="40" y1="0" x2="0" y2="0" width="0" layer="20"/>
 <wire x1="30" y1="0" x2="100" y2="70" width="0.1524" layer="21" curve="-90"/>
 <wire x1="100" y1="80" x2="20" y2="0" width="0.1524" layer="21" curve="90"/>
 <wire x1="10" y1="0" x2="100" y2="90" width="0.1524" layer="21" curve="-90"/>
+<wire x1="0" y1="0" x2="100" y2="100" width="0.1524" layer="21" curve="-90"/>
+<wire x1="40" y1="0" x2="100" y2="60" width="0.1524" layer="21" curve="-90"/>
+<wire x1="0" y1="0" x2="40" y2="0" width="0" layer="20"/>
+<wire x1="40" y1="0" x2="54.717425" y2="39.363540625" width="0" layer="20" curve="-42"/>
+<wire x1="54.717425" y1="39.363540625" x2="58.490971875" y2="36.083246875" width="0" layer="20"/>
+<wire x1="58.490971875" y1="36.083246875" x2="63.916753125" y2="41.509028125" width="0" layer="20" curve="180"/>
+<wire x1="63.916753125" y1="41.509028125" x2="60.636459375" y2="45.282575" width="0" layer="20"/>
+<wire x1="60.636459375" y1="45.282575" x2="100" y2="60" width="0" layer="20" curve="-42"/>
+<wire x1="100" y1="60" x2="100" y2="100" width="0" layer="20"/>
+<wire x1="100" y1="100" x2="64.9792625" y2="93.66721875" width="0" layer="20" curve="20.5"/>
+<wire x1="64.9792625" y1="93.66721875" x2="63.228225" y2="98.35058125" width="0" layer="20"/>
+<wire x1="63.228225" y1="98.35058125" x2="56.457209375" y2="95.545934375" width="0" layer="20" curve="155.5"/>
+<wire x1="56.457209375" y1="95.545934375" x2="58.530675" y2="90.996128125" width="0" layer="20"/>
+<wire x1="58.530675" y1="90.996128125" x2="9.003871875" y2="41.469325" width="0" layer="20" curve="41"/>
+<wire x1="9.003871875" y1="41.469325" x2="4.454065625" y2="43.542790625" width="0" layer="20"/>
+<wire x1="4.454065625" y1="43.542790625" x2="1.64941875" y2="36.771775" width="0" layer="20" curve="155.5"/>
+<wire x1="1.64941875" y1="36.771775" x2="6.33278125" y2="35.0207375" width="0" layer="20"/>
+<wire x1="6.33278125" y1="35.0207375" x2="0" y2="0" width="0" layer="20" curve="20.5"/>
+<wire x1="50" y1="0" x2="-10" y2="0" width="0" layer="51"/>
+<wire x1="-10" y1="0" x2="100" y2="110" width="0" layer="51" curve="-90"/>
+<wire x1="100" y1="110" x2="100" y2="50" width="0" layer="51"/>
+<wire x1="100" y1="50" x2="50" y2="0" width="0" layer="51" curve="90"/>
+<circle x="61.109128125" y="38.890871875" radius="4" width="0.001" layer="51"/>
+<circle x="59.818240625" y="97.00735" radius="4" width="0.001" layer="51"/>
+<circle x="2.99265" y="40.181759375" radius="4" width="0.001" layer="51"/>
+<text x="35.24734375" y="5.665121875" size="1.778" layer="25" align="center">+</text>
+<text x="94.334878125" y="64.75265625" size="1.778" layer="25" align="center">+</text>
 </plain>
 <libraries>
 <library name="eagle-ltspice" urn="urn:adsk.eagle:library:217">
@@ -776,17 +799,20 @@ design rules under a new name.</description>
 <contactref element="U$2" pad="10"/>
 <contactref element="U$2" pad="8"/>
 <polygon width="0.35" layer="1">
-<vertex x="40" y="0"/>
-<vertex x="0" y="0" curve="-90"/>
-<vertex x="100" y="100"/>
-<vertex x="100" y="60" curve="90"/>
+<vertex x="50" y="0"/>
+<vertex x="-10" y="0" curve="-90"/>
+<vertex x="100" y="110"/>
+<vertex x="100" y="50" curve="90"/>
 </polygon>
 <polygon width="0.35" layer="16" rank="2">
 <vertex x="40" y="0"/>
-<vertex x="0" y="0" curve="-90"/>
-<vertex x="100" y="100"/>
+<vertex x="-10" y="0" curve="-90"/>
+<vertex x="100" y="110"/>
 <vertex x="100" y="60" curve="90"/>
 </polygon>
+<via x="2.99265" y="40.181759375" extent="1-16" drill="4" diameter="5" locked="yes"/>
+<via x="59.818240625" y="97.00735" extent="1-16" drill="4" diameter="5"/>
+<via x="61.109128125" y="38.890871875" extent="1-16" drill="4" diameter="5" locked="yes"/>
 <via x="96.94664375" y="69.933375" extent="1-16" drill="1.8" diameter="0.5" alwaysstop="yes"/>
 <via x="96.728546875" y="74.928615625" extent="1-16" drill="1.8" diameter="0.5" alwaysstop="yes"/>
 <via x="96.292353125" y="84.9191" extent="1-16" drill="1.8" diameter="0.5" alwaysstop="yes"/>
@@ -834,10 +860,10 @@ design rules under a new name.</description>
 <contactref element="C10" pad="1"/>
 <contactref element="LED6" pad="4"/>
 <polygon width="0.35" layer="16">
-<vertex x="40" y="0"/>
+<vertex x="50" y="0"/>
 <vertex x="32.5" y="0" curve="-90"/>
 <vertex x="100" y="67.5"/>
-<vertex x="100" y="60" curve="90"/>
+<vertex x="100" y="50" curve="90"/>
 </polygon>
 <via x="97.164740625" y="64.938134375" extent="1-16" drill="1.8" diameter="0.5" alwaysstop="yes"/>
 <via x="35.061865625" y="2.835259375" extent="1-16" drill="1.8" diameter="0.5" alwaysstop="yes"/>
@@ -1060,6 +1086,10 @@ will not be understood (or retained) with this version.
 Since Version 8.3, EAGLE supports the association of 3D packages
 with devices in libraries, schematics, and board files. Those 3D
 packages will not be understood (or retained) with this version.
+</note>
+<note version="8.5" severity="warning">
+Since Version 8.5, EAGLE supports locking for holes, vias, wires and polygons. 
+The locking property on all objects of these types will not be understood in this version. 
 </note>
 </compatibility>
 </eagle>
